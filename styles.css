@@ -23,22 +23,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --papel: #1c1813;
-    --papel-borde: #0f0d0a;
-    --hoja: #27211a;
-    --tinta: #eadfc8;
-    --tinta-suave: #b5a68c;
-    --regla: #8a7759;
-    --regla-suave: #4a3f31;
-    --sombra: rgba(0, 0, 0, 0.55);
-    --acento: #e0715a;
-    --acento-tenue: rgba(224, 113, 90, 0.14);
-    color-scheme: dark;
-  }
-}
-
 :root[data-theme="dark"] {
   --papel: #1c1813;
   --papel-borde: #0f0d0a;

@@ -17,15 +17,13 @@
   <meta property="og:image:alt" content="Icono de Gazapo">
   <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#f3ead7">
-  <meta name="color-scheme" content="light dark">
   <script>
-    // Modo claro u oscuro: el que se elija en Almanaque, común a todos los juegos.
-    // Sin elección guardada, manda la preferencia del sistema.
+    // Modo claro u oscuro: el que se elija en Almanaque, común a todos los juegos. Sin elegir, claro.
     try {
-      var tema = localStorage.getItem('almanaque:tema');
-      if (tema === 'dark' || tema === 'light') document.documentElement.dataset.theme = tema;
-      var oscuro = tema === 'dark' || (!tema && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      if (oscuro) document.querySelector('meta[name="theme-color"]').content = '#1c1813';
+      if (localStorage.getItem('almanaque:tema') === 'dark') {
+        document.documentElement.dataset.theme = 'dark';
+        document.querySelector('meta[name="theme-color"]').content = '#1c1813';
+      }
     } catch (e) {}
   </script>
 
@@ -60,10 +58,6 @@
     #portada img { width: 7.5rem; height: 7.5rem; border-radius: 22%; box-shadow: 0 0 0 1px #cdb994; animation: asomar 0.5s ease-out; }
     #portada p { margin: 0; font: 2.6rem/1 "IM Fell DW Pica", "IM Fell English", Georgia, serif; animation: asomar 0.5s ease-out; }
     #portada.oculta { opacity: 0; visibility: hidden; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) #portada { background: #1c1813; color: #eadfc8; }
-      :root:not([data-theme="light"]) #portada img { box-shadow: 0 0 0 1px #4a3f31; }
-    }
     [data-theme="dark"] #portada { background: #1c1813; color: #eadfc8; }
     [data-theme="dark"] #portada img { box-shadow: 0 0 0 1px #4a3f31; }
     @keyframes asomar { from { opacity: 0; transform: scale(0.9); } }
