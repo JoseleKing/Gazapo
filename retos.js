@@ -50,7 +50,6 @@ window.GAZAPO_RETOS = [
     },
   },
 
-  // Borrador: textos y datos de este día y del siguiente pendientes de revisión.
   {
     fecha: '2026-10-09',
     anio: 1812,
@@ -127,7 +126,6 @@ window.GAZAPO_RETOS = [
     },
   },
 
-  // Borrador: retos del 11 de octubre al 10 de noviembre, pendientes de revisión.
   {
     fecha: '2026-10-11',
     anio: 1605,
