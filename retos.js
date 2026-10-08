@@ -160,7 +160,7 @@ window.GAZAPO_RETOS = [
     trampas: {
       'coches': { termino: 'coche', explicacion: 'Los coches de caballos se pusieron de moda en la Corte de Felipe II, y la palabra, de origen húngaro, ya corría a mediados del siglo XVI.' },
       'novela': { termino: 'novela', explicacion: 'Del italiano novella. En español se usa desde el siglo XVI, y Cervantes llamará Novelas ejemplares a las suyas en 1613.' },
-      'chocolate': { termino: 'chocolate', explicacion: 'El padre José de Acosta ya lo describe en 1590, y a comienzos del siglo XVII empezaba a ponerse de moda en la Corte.' },
+      'chocolate': { termino: 'chocolate', explicacion: 'El padre José de Acosta ya lo describe en 1590, y a comienzos del siglo XVII su consumo se extendía deprisa por España.' },
     },
   },
 
@@ -341,7 +341,6 @@ window.GAZAPO_RETOS = [
     trampas: {
       'ferrocarril': { termino: 'ferrocarril', explicacion: 'La palabra ya corría en los proyectos de los años treinta. En Cuba, entonces española, había ferrocarril desde 1837.' },
       'locomotora': { termino: 'locomotora', explicacion: 'Llegó con las primeras máquinas de vapor sobre raíles, en la década de 1830. Las del Barcelona-Mataró se hicieron en Inglaterra.' },
-      'túnel': { termino: 'túnel', explicacion: 'Del inglés tunnel, llegó con los primeros ferrocarriles. El de Montgat fue el primer túnel de ferrocarril de España.' },
       'daguerrotipo': { termino: 'daguerrotipo', explicacion: 'El invento de Daguerre se presentó en 1839, y ese mismo año ya se hizo uno en Barcelona.' },
     },
   },
@@ -953,7 +952,7 @@ window.GAZAPO_RETOS = [
       },
     },
     trampas: {
-      'gripe': { termino: 'gripe', explicacion: 'Del francés grippe. En español se usaba desde comienzos del siglo XIX.' },
+      'gripe': { termino: 'gripe', explicacion: 'Del francés grippe. En español se documenta desde 1837, y la forma francesa, desde 1775.' },
       'nápoles': { termino: 'soldado de Nápoles', explicacion: 'La canción, de la zarzuela La canción del olvido, se estrenó en 1916 y era la más pegadiza de Madrid. De ahí el apodo de la gripe.' },
       'cuarentena': { termino: 'cuarentena', explicacion: 'En 1348 era un gazapo; en 1918, no: la palabra y la medida tenían ya siglos.' },
     },
