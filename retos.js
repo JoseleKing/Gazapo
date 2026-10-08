@@ -1243,4 +1243,1112 @@ window.GAZAPO_RETOS = [
       'zarzuela': { termino: 'zarzuela', explicacion: 'En 1561 era un gazapo; en 1858, no: el teatro de la Zarzuela se abrió en 1856.' },
     },
   },
+
+  {
+    fecha: '2026-11-11',
+    anio: 1789,
+    encabezado: 'En París, a 16 de julio de 1789',
+    saludo: 'Querido padre:',
+    parrafos: [
+      'Anteayer el pueblo de París asaltó la Bastilla. Sacaron a los presos, que resultaron ser solo siete, y pasearon por las calles la cabeza del gobernador clavada en una pica.',
+      'Todo el mundo lleva en el sombrero una escarapela azul y roja, los colores de la ciudad, y en los cafés se canta la Marsellesa a voz en grito.',
+      'Los Estados Generales se han convertido en Asamblea Nacional, y ya hay quien habla de cortar cabezas con la guillotina y de medir las telas en metros, como manda la razón.',
+    ],
+    despedida: 'Su hijo, que le besa la mano,',
+    firma: 'Ignacio',
+    gazapos: {
+      'marsellesa': {
+        termino: 'Marsellesa',
+        explicacion: 'Rouget de Lisle la compuso en 1792, y tomó ese nombre porque la cantaban los voluntarios de Marsella.',
+        epoca: 'En julio de 1789 se cantaban coplas y canciones populares, como el «Ça ira», que es de 1790.',
+      },
+      'guillotina': {
+        termino: 'guillotina',
+        explicacion: 'La máquina se adoptó en 1792, y el nombre, por el doctor Guillotin, empezó a usarse hacia 1791.',
+        epoca: 'En 1789 a los nobles se los decapitaba con la espada y a los plebeyos se los ahorcaba.',
+      },
+      'metros': {
+        termino: 'metro',
+        explicacion: 'El metro se definió en la década de 1790, y el sistema métrico no se impuso en Francia hasta el siglo XIX.',
+        epoca: 'En 1789 las telas se medían en anas, varas o pies, y cada región tenía las suyas.',
+      },
+    },
+    trampas: {
+      'bastilla': { termino: 'Bastilla', explicacion: 'La fortaleza cayó el 14 de julio de 1789.' },
+      'escarapela': { termino: 'escarapela', explicacion: 'La palabra es antigua, y la escarapela azul y roja de París se repartió esos mismos días.' },
+      'cafés': { termino: 'café', explicacion: 'En el París de 1789 había cientos de cafés, como el Procope.' },
+      'estados': { termino: 'Estados Generales', explicacion: 'Se reunieron en mayo de 1789 y en junio se proclamaron Asamblea Nacional.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-12',
+    anio: 1922,
+    encabezado: 'En Luxor, a 30 de noviembre de 1922',
+    saludo: 'Querida Elena:',
+    parrafos: [
+      'Ayer se abrió oficialmente la tumba de Tutankamón ante las autoridades egipcias. Dicen que cuando el señor Carter se asomó por primera vez y le preguntaron si veía algo, contestó: «Sí, cosas maravillosas».',
+      'La antecámara está llena de carros, lechos dorados y estatuas. Lord Carnarvon, que paga la excavación, ha venido desde Inglaterra, y los periodistas mandan sus crónicas por telégrafo.',
+      'Te mando una fotocopia del plano que me ha dejado un ayudante. Yo tengo una infección en la mano y me tomaría una pastilla de penicilina, pero aquí solo hay yodo. Mañana vuelvo al campamento en jeep.',
+    ],
+    despedida: 'Un abrazo desde el desierto,',
+    firma: 'Luis',
+    gazapos: {
+      'fotocopia': {
+        termino: 'fotocopia',
+        explicacion: 'Las fotocopiadoras se comercializan a partir de 1959.',
+        epoca: 'En 1922 los planos se copiaban a mano o con papel de calco.',
+      },
+      'penicilina': {
+        termino: 'penicilina',
+        explicacion: 'Fleming la descubrió en 1928, y no se usó como medicamento hasta los años cuarenta.',
+        epoca: 'En 1922 las heridas se limpiaban con yodo o alcohol, y había que esperar.',
+      },
+      'jeep': {
+        termino: 'jeep',
+        explicacion: 'El todoterreno militar estadounidense es de 1941.',
+        epoca: 'En 1922 por el desierto se iba en burro, en camello o, con suerte, en un Ford T.',
+      },
+    },
+    trampas: {
+      'tutankamón': { termino: 'Tutankamón', explicacion: 'Carter encontró la tumba el 4 de noviembre de 1922, y la abrieron oficialmente el 29.' },
+      'carter': { termino: 'Carter', explicacion: 'Howard Carter buscaba la tumba desde 1917.' },
+      'carnarvon': { termino: 'Carnarvon', explicacion: 'Lord Carnarvon financiaba la excavación; murió en abril de 1923.' },
+      'telégrafo': { termino: 'telégrafo', explicacion: 'En 1922 era la forma normal de mandar noticias de un continente a otro.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-13',
+    anio: 1085,
+    encabezado: 'En Toledo, a 30 de mayo de 1085',
+    saludo: 'Muy querido hermano:',
+    parrafos: [
+      'Hace unos días entró el rey don Alfonso en Toledo. Los moros que quieran quedarse conservarán sus casas y su mezquita mayor, y muchos mozárabes lloraban de alegría por las calles.',
+      'En la Alcaná, los mercaderes venden de todo: algodón, azafrán, sedas de Almería y unos naipes pintados que juegan los soldados. También traen de Génova unas agujas de marear que llaman brújulas.',
+      'El arzobispo que nombren, dicen, querrá levantar una catedral gótica como las de Francia. Yo me conformo con que se acaben las guerras y pueda volver a casa.',
+    ],
+    despedida: 'Tu hermano,',
+    firma: 'Pedro',
+    gazapos: {
+      'naipes': {
+        termino: 'naipes',
+        explicacion: 'Las cartas de juego llegan a Europa a finales del siglo XIV.',
+        epoca: 'Los soldados de 1085 jugaban a los dados y a las tablas.',
+      },
+      'brújulas': {
+        termino: 'brújula',
+        explicacion: 'La aguja imantada llega al Mediterráneo hacia el siglo XII, y la palabra «brújula» es mucho más tardía.',
+        epoca: 'En 1085 los marinos se guiaban por la costa, el sol y las estrellas.',
+      },
+      'gótica': {
+        termino: 'gótico',
+        explicacion: 'El gótico nace en Francia hacia 1140, y la catedral de Toledo no se empieza hasta 1226.',
+        epoca: 'En 1085 se construía en románico, y en Toledo la vieja mezquita mayor sirvió de catedral.',
+      },
+    },
+    trampas: {
+      'mozárabes': { termino: 'mozárabe', explicacion: 'Así se llamaba a los cristianos que vivían en tierra musulmana, como los de Toledo.' },
+      'algodón': { termino: 'algodón', explicacion: 'En al-Ándalus se cultivaba desde el siglo X.' },
+      'azafrán': { termino: 'azafrán', explicacion: 'Palabra árabe y cultivo conocido en la península desde hacía siglos.' },
+      'alcaná': { termino: 'Alcaná', explicacion: 'Era la calle de los mercaderes de Toledo, junto a la mezquita mayor.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-14',
+    anio: 1851,
+    encabezado: 'En Londres, a 2 de mayo de 1851',
+    saludo: 'Querida madre:',
+    parrafos: [
+      'Ayer la reina Victoria inauguró la Gran Exposición en un palacio todo de hierro y cristal, en Hyde Park. Dentro caben árboles enteros, y hay máquinas de vapor, telares y un telégrafo que manda mensajes en un instante.',
+      'Me he hecho un daguerrotipo para mandároslo, y he cruzado la ciudad en ómnibus. Para volver al hotel pienso coger el metro, que es mucho más rápido.',
+      'En la sección americana enseñan un ascensor que sube a la gente sin peligro y una dinamita para abrir minas, pero yo no me fío de esos inventos.',
+    ],
+    despedida: 'Le quiere su hijo,',
+    firma: 'Fernando',
+    gazapos: {
+      'metro': {
+        termino: 'metro',
+        explicacion: 'El primer metro del mundo, el de Londres, se abre en 1863.',
+        epoca: 'En 1851 se cruzaba Londres en ómnibus de caballos o en coche de alquiler.',
+      },
+      'ascensor': {
+        termino: 'ascensor',
+        explicacion: 'Otis presenta el ascensor con freno de seguridad en 1853 y 1854, en Nueva York.',
+        epoca: 'En 1851 se subía por la escalera, o con montacargas de cuerda.',
+      },
+      'dinamita': {
+        termino: 'dinamita',
+        explicacion: 'Alfred Nobel la patenta en 1867.',
+        epoca: 'En 1851 las minas se abrían con pólvora negra.',
+      },
+    },
+    trampas: {
+      'cristal': { termino: 'Palacio de Cristal', explicacion: 'El Crystal Palace se construyó para esta exposición.' },
+      'telégrafo': { termino: 'telégrafo', explicacion: 'El eléctrico funcionaba en Inglaterra desde finales de los años treinta.' },
+      'daguerrotipo': { termino: 'daguerrotipo', explicacion: 'Se presentó en 1839, y en 1851 ya había retratistas en todas las capitales.' },
+      'ómnibus': { termino: 'ómnibus', explicacion: 'Los ómnibus de caballos circulaban por Londres desde 1829.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-15',
+    anio: 1588,
+    encabezado: 'En Lisboa, a 28 de mayo de 1588',
+    saludo: 'Querida esposa:',
+    parrafos: [
+      'Por fin zarpa la Armada contra Inglaterra. Somos más de ciento treinta naves, entre galeones, urcas y galeazas, y nos manda el duque de Medina Sidonia, que dicen que no quería el cargo.',
+      'Aquí todos la llaman la Armada Invencible. Yo voy en el San Martín, la capitana, con mi arcabuz y mi espada, y el capellán nos ha bendecido a todos.',
+      'Desde la cofa, con un telescopio, se verá Inglaterra antes que nadie. Si vuelvo con bien, te traeré del país de los ingleses un poco de ese té que toman a todas horas.',
+    ],
+    despedida: 'Tu marido, que no te olvida,',
+    firma: 'Alonso',
+    gazapos: {
+      'invencible': {
+        termino: 'Invencible',
+        explicacion: 'El nombre se popularizó después, en buena parte con ironía, tras la derrota.',
+        epoca: 'En 1588 se la llamaba la Grande y Felicísima Armada.',
+      },
+      'telescopio': {
+        termino: 'telescopio',
+        explicacion: 'El anteojo se inventa en los Países Bajos en 1608, y la palabra «telescopio» es de 1611.',
+        epoca: 'En 1588 los vigías solo tenían sus ojos.',
+      },
+      'té': {
+        termino: 'té',
+        explicacion: 'El té no se pone de moda en Inglaterra hasta mediados del siglo XVII.',
+        epoca: 'En la Inglaterra de 1588 se bebía cerveza.',
+      },
+    },
+    trampas: {
+      'galeazas': { termino: 'galeaza', explicacion: 'Eran galeras grandes de vela y remo; en la Armada iban cuatro, de Nápoles.' },
+      'galeones': { termino: 'galeón', explicacion: 'Era el gran barco de guerra de la época.' },
+      'arcabuz': { termino: 'arcabuz', explicacion: 'El arma de fuego de la infantería española del siglo XVI.' },
+      'sidonia': { termino: 'Medina Sidonia', explicacion: 'El duque de Medina Sidonia mandó la Armada tras la muerte del marqués de Santa Cruz.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-16',
+    anio: 1957,
+    encabezado: 'En Barcelona, a 6 de octubre de 1957',
+    saludo: 'Querida Montse:',
+    parrafos: [
+      'Lo ha dicho la radio: los rusos han lanzado un satélite artificial, el Sputnik, que da la vuelta a la Tierra en hora y media y hace bip, bip. Mi padre no se lo cree.',
+      'Mi tío se ha comprado un Seiscientos, el coche nuevo de la Seat, y el domingo pasado nos llevó a Sitges. En la playa todos escuchaban el partido en sus radios de transistores.',
+      'Mi primo dice que algún día tendremos internet en casa y que pagaremos en euros, pero yo creo que antes llegará el hombre a la Luna. Esta noche alquilamos una película en el videoclub del barrio.',
+    ],
+    despedida: 'Un beso,',
+    firma: 'Núria',
+    gazapos: {
+      'internet': {
+        termino: 'internet',
+        explicacion: 'La red nace a finales de los sesenta como proyecto militar, y llega a las casas en los noventa.',
+        epoca: 'En 1957 se hablaba por teléfono, y no todas las casas lo tenían.',
+      },
+      'euros': {
+        termino: 'euro',
+        explicacion: 'El euro nace en 1999 y sus billetes y monedas circulan desde 2002.',
+        epoca: 'En 1957 se pagaba en pesetas.',
+      },
+      'videoclub': {
+        termino: 'videoclub',
+        explicacion: 'Los videoclubes se extienden por España en los años ochenta.',
+        epoca: 'En 1957 las películas se veían en el cine del barrio, en sesión doble.',
+      },
+    },
+    trampas: {
+      'sputnik': { termino: 'Sputnik', explicacion: 'Se lanzó el 4 de octubre de 1957.' },
+      'satélite': { termino: 'satélite', explicacion: 'La palabra se usaba para las lunas de los planetas desde el siglo XVII.' },
+      'seiscientos': { termino: 'Seiscientos', explicacion: 'El SEAT 600 salió en junio de 1957.' },
+      'transistores': { termino: 'transistor', explicacion: 'Las radios de transistores se popularizan precisamente a finales de los cincuenta.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-17',
+    anio: 1453,
+    encabezado: 'En Nápoles, a 20 de junio de 1453',
+    saludo: 'Muy amado señor tío:',
+    parrafos: [
+      'Han llegado a la corte del rey don Alfonso noticias terribles: Constantinopla ha caído en manos del turco. El sultán Mehmet derribó las murallas con un cañón tan grande que lo arrastraban decenas de bueyes.',
+      'Los venecianos y genoveses que escaparon en sus galeras cuentan que el último emperador murió peleando en la muralla. En el puerto ya hay quien dice que subirá el precio del café y de la seda.',
+      'Aquí todo sigue igual: el rey pasa las tardes con sus sabios, y anoche, en palacio, se representó una ópera nueva. Mañana iré a ver los tulipanes que ha plantado el jardinero flamenco.',
+    ],
+    despedida: 'Vuestro sobrino y servidor,',
+    firma: 'Jaume',
+    gazapos: {
+      'café': {
+        termino: 'café',
+        explicacion: 'El café llega a Europa en el siglo XVII.',
+        epoca: 'En 1453 los mercaderes temían por la seda y las especias.',
+      },
+      'ópera': {
+        termino: 'ópera',
+        explicacion: 'La ópera nace en Florencia hacia 1600.',
+        epoca: 'En 1453 en las cortes se oían canciones, danzas y representaciones religiosas.',
+      },
+      'tulipanes': {
+        termino: 'tulipán',
+        explicacion: 'Los tulipanes llegan a Europa desde Turquía a mediados del siglo XVI.',
+        epoca: 'En los jardines de 1453 había rosas, lirios y claveles.',
+      },
+    },
+    trampas: {
+      'cañón': { termino: 'cañón', explicacion: 'El gran cañón de Orbán abrió brecha en las murallas en 1453.' },
+      'sultán': { termino: 'sultán', explicacion: 'Mehmet II era sultán desde 1451.' },
+      'galeras': { termino: 'galera', explicacion: 'El barco de remo y vela del Mediterráneo desde la Antigüedad.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-18',
+    anio: 1883,
+    encabezado: 'En Nueva York, a 25 de mayo de 1883',
+    saludo: 'Querido Ramón:',
+    parrafos: [
+      'Ayer se abrió el puente de Brooklyn, el mayor puente colgante del mundo, sostenido por cables de acero. Hubo cañonazos, fuegos artificiales y miles de personas cruzándolo a pie.',
+      'Por la noche fuimos a ver las calles del bajo Manhattan, que alumbran con bombillas eléctricas desde que el señor Edison abrió su central el año pasado. En la oficina ya tenemos teléfono.',
+      'Mañana iremos a un salón a escuchar jazz y a tomar una cocacola, que dicen que es la bebida de moda. Luego, si hay tiempo, comeremos una hamburguesa.',
+    ],
+    despedida: 'Tu amigo,',
+    firma: 'Andrés',
+    gazapos: {
+      'jazz': {
+        termino: 'jazz',
+        explicacion: 'El jazz nace en Nueva Orleans a principios del siglo XX.',
+        epoca: 'En 1883 se habría escuchado una banda de metales o música de minstrel.',
+      },
+      'cocacola': {
+        termino: 'cocacola',
+        explicacion: 'La Coca-Cola se inventa en Atlanta en 1886.',
+        epoca: 'En 1883 se habría tomado una zarzaparrilla o una limonada.',
+      },
+      'hamburguesa': {
+        termino: 'hamburguesa',
+        explicacion: 'La hamburguesa en bocadillo se populariza en Estados Unidos a principios del siglo XX, y la palabra española es aún más tardía.',
+        epoca: 'En 1883 se habría comido una ostra o un filete en un restaurante.',
+      },
+    },
+    trampas: {
+      'brooklyn': { termino: 'Brooklyn', explicacion: 'El puente se inauguró el 24 de mayo de 1883.' },
+      'bombillas': { termino: 'bombilla', explicacion: 'Edison patentó su lámpara en 1880 y abrió la central de Pearl Street en septiembre de 1882.' },
+      'edison': { termino: 'Edison', explicacion: 'En 1883 ya era famoso por el fonógrafo y la bombilla.' },
+      'teléfono': { termino: 'teléfono', explicacion: 'Bell lo patentó en 1876, y en 1883 Nueva York tenía miles de abonados.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-19',
+    anio: 1714,
+    encabezado: 'En Barcelona, a 15 de septiembre de 1714',
+    saludo: 'Estimada hermana:',
+    parrafos: [
+      'El día once entraron las tropas del duque de Berwick por las brechas de la muralla. Se luchó calle por calle, y el conseller en cap, Rafael Casanova, cayó herido junto a la bandera de Santa Eulalia.',
+      'Ahora dicen que nos quitarán los fueros y las instituciones. Los miqueletes se han echado al monte, y en las tabernas ya se cantan coplas contra los Borbones.',
+      'Mi cuñado jura que cada once de septiembre se hará una gran Diada, con Els Segadors en todas las plazas y avisos por telégrafo a toda Cataluña.',
+    ],
+    despedida: 'Tu hermano,',
+    firma: 'Josep',
+    gazapos: {
+      'diada': {
+        termino: 'Diada',
+        explicacion: 'El 11 de septiembre se empezó a conmemorar a finales del siglo XIX, y es fiesta oficial de Cataluña desde 1980.',
+        epoca: 'En 1714 nadie celebraba nada: era el día de la derrota.',
+      },
+      'segadors': {
+        termino: 'Els Segadors',
+        explicacion: 'El romance es antiguo, pero la letra actual del himno es de 1899.',
+        epoca: 'En 1714 se cantaban coplas y romances.',
+      },
+      'telégrafo': {
+        termino: 'telégrafo',
+        explicacion: 'El telégrafo óptico es de la década de 1790.',
+        epoca: 'En 1714 las noticias corrían a caballo.',
+      },
+    },
+    trampas: {
+      'berwick': { termino: 'Berwick', explicacion: 'El duque de Berwick dirigió el asalto final.' },
+      'casanova': { termino: 'Casanova', explicacion: 'Rafael Casanova, conseller en cap, fue herido el 11 de septiembre de 1714.' },
+      'miqueletes': { termino: 'miquelete', explicacion: 'Eran tropas ligeras catalanas de la época.' },
+      'borbones': { termino: 'Borbón', explicacion: 'Felipe V, el primer Borbón español, reinaba desde 1700.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-20',
+    anio: 1968,
+    encabezado: 'En Londres, a 7 de abril de 1968',
+    saludo: 'Querida Pili:',
+    parrafos: [
+      '¡Ganamos! Anoche Massiel ganó Eurovisión en el Royal Albert Hall con el «La, la, la», por un solo punto frente a Cliff Richard. En el hotel lo celebramos hasta las tantas.',
+      'Aquí las chicas llevan minifalda, y en todas las tiendas suenan los Beatles. La BBC ya emite algunos programas en color.',
+      'Te he comprado el disco compacto de la canción, y te mando un videoclip que han grabado en Hyde Park. Cuando vuelva, lo cantamos en el karaoke del barrio.',
+    ],
+    despedida: 'Muchos besos,',
+    firma: 'Maribel',
+    gazapos: {
+      'compacto': {
+        termino: 'disco compacto',
+        explicacion: 'El CD sale al mercado en 1982.',
+        epoca: 'En 1968 la canción se vendía en un disco sencillo de vinilo, de 45 revoluciones.',
+      },
+      'videoclip': {
+        termino: 'videoclip',
+        explicacion: 'Los videoclips se popularizan en los años ochenta, con la MTV.',
+        epoca: 'En 1968 las canciones se veían en la tele o en el cine.',
+      },
+      'karaoke': {
+        termino: 'karaoke',
+        explicacion: 'El karaoke nace en Japón en los años setenta y llega a España en los noventa.',
+        epoca: 'En 1968 se cantaba en el guateque, con el tocadiscos.',
+      },
+    },
+    trampas: {
+      'eurovisión': { termino: 'Eurovisión', explicacion: 'El festival se celebra desde 1956.' },
+      'massiel': { termino: 'Massiel', explicacion: 'Ganó el 6 de abril de 1968.' },
+      'minifalda': { termino: 'minifalda', explicacion: 'Mary Quant la popularizó en Londres a mediados de los sesenta.' },
+      'color': { termino: 'color', explicacion: 'La BBC2 emitía en color desde 1967.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-21',
+    anio: 929,
+    encabezado: 'En Córdoba, a 20 de enero del año 929',
+    saludo: 'Querido primo:',
+    parrafos: [
+      'Hace unos días se leyó en la mezquita el decreto: el emir Abderramán se proclama califa y príncipe de los creyentes. En el zoco no se habla de otra cosa.',
+      'Dicen que piensa levantar una ciudad nueva al pie de la sierra, más hermosa que ninguna, y que ya la llaman Medina Azahara. Yo, mientras, paso las tardes jugando al ajedrez con el alfaquí, que siempre me gana.',
+      'Mi tío, que ha vuelto de Sevilla, cuenta maravillas de la Giralda, que se ve desde todo el río, y de la pólvora con que los marineros espantan a los piratas.',
+    ],
+    despedida: 'Que Dios te guarde,',
+    firma: 'Hasán',
+    gazapos: {
+      'azahara': {
+        termino: 'Medina Azahara',
+        explicacion: 'Las obras de la ciudad palatina empezaron en el año 936, siete años después.',
+        epoca: 'En 929 nadie hablaba aún de esa ciudad.',
+      },
+      'giralda': {
+        termino: 'Giralda',
+        explicacion: 'El alminar de Sevilla se levanta a finales del siglo XII, y el nombre viene del giraldillo que se le puso en 1568.',
+        epoca: 'En 929 la mezquita mayor de Sevilla era mucho más modesta.',
+      },
+      'pólvora': {
+        termino: 'pólvora',
+        explicacion: 'La pólvora llega a Europa en el siglo XIII.',
+        epoca: 'Contra los piratas, en 929, se usaban arcos y flechas incendiarias.',
+      },
+    },
+    trampas: {
+      'califa': { termino: 'califa', explicacion: 'Abderramán III se proclamó califa precisamente en enero de 929.' },
+      'ajedrez': { termino: 'ajedrez', explicacion: 'Llegó a al-Ándalus desde Oriente en el siglo IX.' },
+      'zoco': { termino: 'zoco', explicacion: 'Del árabe suq, el mercado.' },
+      'alfaquí': { termino: 'alfaquí', explicacion: 'Del árabe al-faqih, el sabio en leyes; la Córdoba omeya estaba llena de ellos.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-22',
+    anio: 1837,
+    encabezado: 'En Güines, a 20 de noviembre de 1837',
+    saludo: 'Querido hermano:',
+    parrafos: [
+      'Ayer se inauguró el ferrocarril de La Habana a Bejucal. Es el primero de todos los dominios españoles, antes incluso que en la Península, y dicen que el año que viene llegará hasta aquí.',
+      'La locomotora echa humo como un ingenio en plena zafra. Los hacendados están felices: el azúcar llegará antes al puerto, y de allí en vapor hasta Europa.',
+      'Mi patrón quiere que le saquen una fotografía delante de la locomotora y luego dar un paseo en bicicleta por los muelles. Yo me conformaría con unos días de descanso y una aspirina para este dolor de muelas.',
+    ],
+    despedida: 'Tu hermano,',
+    firma: 'Tomás',
+    gazapos: {
+      'fotografía': {
+        termino: 'fotografía',
+        explicacion: 'La fotografía se presenta en 1839.',
+        epoca: 'En 1837 el patrón tendría que haber posado para un pintor.',
+      },
+      'bicicleta': {
+        termino: 'bicicleta',
+        explicacion: 'Las primeras bicicletas con pedales son de los años sesenta del siglo XIX.',
+        epoca: 'En 1837 se paseaba a caballo o en quitrín.',
+      },
+      'aspirina': {
+        termino: 'aspirina',
+        explicacion: 'Bayer la comercializa en 1899.',
+        epoca: 'En 1837, para el dolor de muelas, láudano o un sacamuelas.',
+      },
+    },
+    trampas: {
+      'ferrocarril': { termino: 'ferrocarril', explicacion: 'El de La Habana a Bejucal se inauguró el 19 de noviembre de 1837, once años antes que el de Barcelona a Mataró.' },
+      'locomotora': { termino: 'locomotora', explicacion: 'Las de este ferrocarril vinieron de Inglaterra.' },
+      'zafra': { termino: 'zafra', explicacion: 'La cosecha de la caña de azúcar.' },
+      'vapor': { termino: 'vapor', explicacion: 'En 1837 los vapores ya cruzaban el Caribe.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-23',
+    anio: 1513,
+    encabezado: 'En Santa María la Antigua del Darién, a 30 de septiembre de 1513',
+    saludo: 'Muy querido padre:',
+    parrafos: [
+      'Vasco Núñez de Balboa ha visto otra mar al otro lado de las montañas. Subió solo a una cumbre, y luego bajó a la playa con la espada en la mano y el agua por las rodillas, y tomó posesión de ella por los Reyes. La llaman la Mar del Sur.',
+      'Los caciques de la tierra nos han dado oro y perlas, y nos enseñan a cruzar los ríos en canoas. Uno de ellos nos convidó a chocolate y a una bebida negra y amarga que llaman café.',
+      'Dicen que en aquella costa se fundará pronto una ciudad que se llamará Panamá. Ojalá me den allí un solar, que en esta tierra se pasa mucha hambre.',
+    ],
+    despedida: 'Su hijo,',
+    firma: 'Gonzalo',
+    gazapos: {
+      'chocolate': {
+        termino: 'chocolate',
+        explicacion: 'Los españoles conocen el cacao en México años después, y la palabra «chocolate» no aparece hasta finales del siglo XVI.',
+        epoca: 'En 1513 los caciques del Darién habrían ofrecido chicha de maíz.',
+      },
+      'café': {
+        termino: 'café',
+        explicacion: 'El café llega a Europa en el siglo XVII, y a América en el XVIII.',
+        epoca: 'En 1513 nadie en América había oído hablar de él.',
+      },
+      'panamá': {
+        termino: 'Panamá',
+        explicacion: 'La ciudad la funda Pedrarias Dávila en 1519.',
+        epoca: 'En 1513 aquella costa solo tenía aldeas de pescadores.',
+      },
+    },
+    trampas: {
+      'caciques': { termino: 'cacique', explicacion: 'Palabra taína que los españoles usan desde los primeros años.' },
+      'perlas': { termino: 'perla', explicacion: 'Balboa volvió con muchas perlas del golfo de San Miguel.' },
+      'canoas': { termino: 'canoa', explicacion: 'Ya está en el diario de Colón, en 1492.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-24',
+    anio: 1926,
+    encabezado: 'En Buenos Aires, a 11 de febrero de 1926',
+    saludo: 'Querida mamá:',
+    parrafos: [
+      'Ayer llegó el Plus Ultra al puerto de Buenos Aires. Ramón Franco, Ruiz de Alda, Durán y el mecánico Rada han cruzado el Atlántico en un hidroavión, desde Palos de la Frontera, en diecinueve días.',
+      'Medio Buenos Aires salió a recibirlos, y por la noche hubo baile y tangos en todos los salones.',
+      'Dicen que pronto habrá aviones con reactores que harán el viaje en un día, que aterrizarán en helipuertos y que se guiarán por GPS. Yo, por si acaso, volveré en barco.',
+    ],
+    despedida: 'Te quiere tu hijo,',
+    firma: 'Carlos',
+    gazapos: {
+      'reactores': {
+        termino: 'reactor',
+        explicacion: 'Los primeros aviones a reacción vuelan a finales de los años treinta, y los de pasajeros, en los cincuenta.',
+        epoca: 'En 1926 los aviones llevaban motores de hélice.',
+      },
+      'helipuertos': {
+        termino: 'helipuerto',
+        explicacion: 'Los helicópteros prácticos son de los años cuarenta, y los helipuertos, posteriores.',
+        epoca: 'En 1926 los hidroaviones amerizaban en los puertos.',
+      },
+      'gps': {
+        termino: 'GPS',
+        explicacion: 'El sistema de satélites estadounidense funciona desde los años noventa.',
+        epoca: 'En 1926 se navegaba con brújula, sextante y radio.',
+      },
+    },
+    trampas: {
+      'ultra': { termino: 'Plus Ultra', explicacion: 'El hidroavión salió de Palos el 22 de enero y llegó a Buenos Aires el 10 de febrero de 1926.' },
+      'franco': { termino: 'Ramón Franco', explicacion: 'Era el comandante del vuelo.' },
+      'hidroavión': { termino: 'hidroavión', explicacion: 'Los hidroaviones existían desde 1910.' },
+      'tangos': { termino: 'tango', explicacion: 'En 1926 el tango triunfaba en Buenos Aires y en medio mundo.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-25',
+    anio: 1805,
+    encabezado: 'En Conil, a 25 de octubre de 1805',
+    saludo: 'Querida madre:',
+    parrafos: [
+      'Desde la torre de Castilnovo vimos el combate el lunes. Las andanadas sonaban como truenos y el humo tapaba el mar. Dicen que el almirante Nelson ha muerto en su navío y que Gravina está malherido.',
+      'El Santísima Trinidad, el barco más grande del mundo, se ha ido a pique con el temporal. Llegan a la playa marineros heridos, y el cirujano les pone anestesia antes de cortarles las piernas.',
+      'Mañana mando un telegrama a Cádiz para saber de mi hermano. Si no contestan, iré yo mismo en tren.',
+    ],
+    despedida: 'Su hija,',
+    firma: 'Manuela',
+    gazapos: {
+      'anestesia': {
+        termino: 'anestesia',
+        explicacion: 'La anestesia con éter se presenta en Boston en 1846.',
+        epoca: 'En 1805 a los heridos se les daba aguardiente o láudano.',
+      },
+      'telegrama': {
+        termino: 'telegrama',
+        explicacion: 'El telégrafo eléctrico llega a España a mediados del siglo XIX.',
+        epoca: 'En 1805 se mandaba a un propio a caballo.',
+      },
+      'tren': {
+        termino: 'tren',
+        explicacion: 'El primer ferrocarril de la Península es de 1848.',
+        epoca: 'En 1805 se iba a Cádiz en diligencia, en calesa o en barca.',
+      },
+    },
+    trampas: {
+      'nelson': { termino: 'Nelson', explicacion: 'Murió en el combate de Trafalgar, el 21 de octubre de 1805.' },
+      'gravina': { termino: 'Gravina', explicacion: 'Fue herido en Trafalgar y murió meses después.' },
+      'trinidad': { termino: 'Santísima Trinidad', explicacion: 'El navío de cuatro puentes se hundió el 24 de octubre de 1805.' },
+      'navío': { termino: 'navío', explicacion: 'Así se llamaba al gran barco de guerra de la época.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-26',
+    anio: 1532,
+    encabezado: 'En Cajamarca, a 20 de noviembre de 1532',
+    saludo: 'Querido hermano:',
+    parrafos: [
+      'El sábado prendimos al inca Atahualpa en la plaza de Cajamarca. Venía en andas, cubierto de oro y plumas, con miles de indios, y Pizarro lo hizo cautivo en una tarde.',
+      'Ahora ofrece llenar de oro un cuarto hasta donde alcanza su mano, y dos más de plata. Los indios traen el metal a lomos de llamas, y tienen otras más finas que llaman vicuñas.',
+      'Cuando todo acabe me iré a vivir a Lima, que dicen que es muy rica, o a las minas de Potosí, que son de plata pura. Y si no, a Bolivia, que allí hay tierra para todos.',
+    ],
+    despedida: 'Tu hermano,',
+    firma: 'Hernando',
+    gazapos: {
+      'lima': {
+        termino: 'Lima',
+        explicacion: 'Pizarro funda la Ciudad de los Reyes en 1535.',
+        epoca: 'En 1532 la costa de Lima era un valle de pueblos indígenas.',
+      },
+      'potosí': {
+        termino: 'Potosí',
+        explicacion: 'El cerro de plata se descubre en 1545.',
+        epoca: 'En 1532 la plata de Atahualpa venía del rescate.',
+      },
+      'bolivia': {
+        termino: 'Bolivia',
+        explicacion: 'La república toma el nombre de Bolívar en 1825.',
+        epoca: 'En 1532 aquellas tierras eran el Collasuyo del imperio inca, y luego el Alto Perú.',
+      },
+    },
+    trampas: {
+      'inca': { termino: 'inca', explicacion: 'Atahualpa fue capturado el 16 de noviembre de 1532.' },
+      'llamas': { termino: 'llama', explicacion: 'Los cronistas describen las llamas desde los primeros contactos.' },
+      'vicuñas': { termino: 'vicuña', explicacion: 'Palabra quechua que los españoles recogen enseguida.' },
+      'pizarro': { termino: 'Pizarro', explicacion: 'Francisco Pizarro mandaba la expedición.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-27',
+    anio: 2002,
+    encabezado: 'En Madrid, a 2 de enero de 2002',
+    saludo: 'Querida abuela:',
+    parrafos: [
+      'Ayer estrenamos el euro. En el quiosco me devolvieron las vueltas en monedas nuevas y en pesetas, y todo el mundo iba con la calculadora: ciento sesenta y seis con trescientas ochenta y seis.',
+      'Por la noche fuimos al cine a ver Harry Potter, y mi hermano no paró de mandar SMS a sus amigos para felicitarles el año.',
+      'Te subo las fotos de la Puerta del Sol a Instagram, y te paso la canción de las campanadas por Spotify. Mi hermano dice que de mayor quiere ser youtuber.',
+    ],
+    despedida: 'Un beso muy fuerte,',
+    firma: 'Lucía',
+    gazapos: {
+      'instagram': {
+        termino: 'Instagram',
+        explicacion: 'La red social nace en 2010.',
+        epoca: 'En 2002 las fotos se mandaban por correo electrónico o se revelaban en papel.',
+      },
+      'spotify': {
+        termino: 'Spotify',
+        explicacion: 'El servicio sueco empieza a funcionar en 2008.',
+        epoca: 'En 2002 la música se escuchaba en CD o en MP3.',
+      },
+      'youtuber': {
+        termino: 'youtuber',
+        explicacion: 'YouTube nace en 2005, y los youtubers vienen después.',
+        epoca: 'En 2002 los niños querían ser futbolistas o astronautas.',
+      },
+    },
+    trampas: {
+      'euro': { termino: 'euro', explicacion: 'Los billetes y monedas de euro entraron en circulación el 1 de enero de 2002.' },
+      'pesetas': { termino: 'peseta', explicacion: 'Convivieron con el euro hasta el 28 de febrero de 2002.' },
+      'sms': { termino: 'SMS', explicacion: 'Los mensajes cortos eran muy populares a finales de los noventa.' },
+      'potter': { termino: 'Harry Potter', explicacion: 'La primera película se estrenó en España a finales de noviembre de 2001.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-28',
+    anio: 1212,
+    encabezado: 'En Calatrava, a 20 de julio de 1212',
+    saludo: 'Mi señora madre:',
+    parrafos: [
+      'Le escribo con la mano todavía temblando. El lunes, en las Navas de Tolosa, los reyes de Castilla, Aragón y Navarra deshicieron al ejército del Miramamolín.',
+      'Hubo de todo: ballestas, lanzas, cargas de caballería y hasta cañones que trajeron los ultramontanos y que tronaban como el fin del mundo.',
+      'El físico me ha cosido la herida del brazo y me ha dado una aspirina para el dolor. Si no fuera por ella, me iría con los almogávares hacia Úbeda. Guárdeme en casa un mosquete por si vuelven los moros.',
+    ],
+    despedida: 'Su hijo,',
+    firma: 'Rodrigo',
+    gazapos: {
+      'cañones': {
+        termino: 'cañón',
+        explicacion: 'La artillería de pólvora aparece en Europa en el siglo XIV.',
+        epoca: 'En 1212 se usaban catapultas y fundíbulos.',
+      },
+      'aspirina': {
+        termino: 'aspirina',
+        explicacion: 'Bayer la comercializa en 1899.',
+        epoca: 'El físico de 1212 habría usado vino, miel o emplastos de hierbas.',
+      },
+      'mosquete': {
+        termino: 'mosquete',
+        explicacion: 'El mosquete es un arma del siglo XVI.',
+        epoca: 'En 1212 se guardaba en casa una ballesta o una lanza.',
+      },
+    },
+    trampas: {
+      'miramamolín': { termino: 'Miramamolín', explicacion: 'Así llamaban los cristianos al califa almohade, del árabe amir al-muminin.' },
+      'ballestas': { termino: 'ballesta', explicacion: 'Se usaba en la península desde hacía siglos.' },
+      'almogávares': { termino: 'almogávar', explicacion: 'Tropas de frontera que ya aparecen en las crónicas del siglo XII.' },
+      'físico': { termino: 'físico', explicacion: 'Así se llamaba al médico en la Edad Media.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-29',
+    anio: 1869,
+    encabezado: 'En Port Said, a 18 de noviembre de 1869',
+    saludo: 'Querido Enrique:',
+    parrafos: [
+      'Ayer se inauguró el canal de Suez. Abrió el desfile el yate de la emperatriz Eugenia, el Águila, seguido de barcos de media Europa, y el señor Lesseps no cabía en sí de orgullo.',
+      'Por la noche hubo fuegos artificiales y un baile ofrecido por el jedive. Dicen que para la ocasión el maestro Verdi ha escrito una ópera, Aida, que se estrenará esta misma semana en El Cairo.',
+      'Ahora se irá a la India en la mitad de tiempo. Yo vuelvo a Barcelona en un vapor francés, aunque ya me gustaría ir en avión o, mejor aún, ver todo esto en el cine.',
+    ],
+    despedida: 'Tu amigo,',
+    firma: 'Joaquín',
+    gazapos: {
+      'aida': {
+        termino: 'Aida',
+        explicacion: 'Verdi no la terminó a tiempo: se estrenó en El Cairo en diciembre de 1871.',
+        epoca: 'En las fiestas de 1869 se representó en El Cairo «Rigoletto».',
+      },
+      'avión': {
+        termino: 'avión',
+        explicacion: 'El primer vuelo a motor es de 1903, y los aviones de pasajeros, posteriores.',
+        epoca: 'En 1869 se viajaba en vapor o en ferrocarril.',
+      },
+      'cine': {
+        termino: 'cine',
+        explicacion: 'Los Lumière presentan el cinematógrafo en 1895.',
+        epoca: 'En 1869 los espectáculos de imágenes eran la linterna mágica y el diorama.',
+      },
+    },
+    trampas: {
+      'eugenia': { termino: 'Eugenia', explicacion: 'La emperatriz de los franceses presidió la inauguración.' },
+      'lesseps': { termino: 'Lesseps', explicacion: 'Ferdinand de Lesseps dirigió las obras del canal.' },
+      'jedive': { termino: 'jedive', explicacion: 'Era el título del virrey de Egipto, Ismail Pachá.' },
+      'vapor': { termino: 'vapor', explicacion: 'En 1869 los vapores ya cruzaban todos los mares.' },
+    },
+  },
+
+  {
+    fecha: '2026-11-30',
+    anio: 1609,
+    encabezado: 'En Venecia, a 26 de agosto de 1609',
+    saludo: 'Muy señor mío:',
+    parrafos: [
+      'El profesor Galileo, de Padua, ha subido a los senadores al campanario de San Marcos con un anteojo que acerca las cosas. Vieron las velas de los barcos dos horas antes de que entraran en el puerto.',
+      'Aquí ya lo llaman telescopio, y dicen que con él se verán los mares de la Luna y los anillos de Saturno.',
+      'Galileo es hombre curioso: lleva años estudiando cómo oscila el péndulo, y ahora quiere medir el peso del aire con un barómetro de su invención. Le mando un abrazo desde esta ciudad de agua.',
+    ],
+    despedida: 'Su servidor,',
+    firma: 'Juan de Mendoza',
+    gazapos: {
+      'telescopio': {
+        termino: 'telescopio',
+        explicacion: 'El nombre se le dio al instrumento en 1611.',
+        epoca: 'En 1609 se decía anteojo, o, en italiano, occhiale.',
+      },
+      'anillos': {
+        termino: 'anillos de Saturno',
+        explicacion: 'En 1610 Galileo vio en Saturno dos «asas» que no supo explicar; los anillos los describió Huygens en 1655.',
+        epoca: 'En 1609 nadie había visto Saturno más que como un punto de luz.',
+      },
+      'barómetro': {
+        termino: 'barómetro',
+        explicacion: 'Lo inventa Torricelli, discípulo de Galileo, en 1643.',
+        epoca: 'En 1609 nadie sabía medir el peso del aire.',
+      },
+    },
+    trampas: {
+      'anteojo': { termino: 'anteojo', explicacion: 'Así se llamaba al telescopio en español.' },
+      'galileo': { termino: 'Galileo', explicacion: 'Presentó su anteojo al Senado de Venecia en agosto de 1609.' },
+      'péndulo': { termino: 'péndulo', explicacion: 'Galileo estudiaba las oscilaciones del péndulo desde principios de siglo.' },
+      'campanario': { termino: 'campanario', explicacion: 'El de San Marcos servía de atalaya sobre la laguna.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-01',
+    anio: 1912,
+    encabezado: 'En Southampton, a 9 de abril de 1912',
+    saludo: 'Querida Carmen:',
+    parrafos: [
+      'Mañana embarco en el Titanic, el transatlántico más grande del mundo. Dicen que es insumergible, y que tiene piscina, gimnasio y hasta baño turco.',
+      'Viajo en tercera, con unos vascos que van a hacer las Américas. Si hay algún problema, el telegrafista puede pedir socorro con el sistema Marconi, y el radar avisará de los icebergs.',
+      'Desde Nueva York te mandaré un correo electrónico. Llevo poco equipaje: una maleta de nailon y la foto de los niños.',
+    ],
+    despedida: 'Tu marido,',
+    firma: 'Ramón',
+    gazapos: {
+      'radar': {
+        termino: 'radar',
+        explicacion: 'El radar se desarrolla en los años treinta.',
+        epoca: 'En 1912 los icebergs los buscaban los vigías desde la cofa, y los avisos llegaban por radiotelegrafía.',
+      },
+      'electrónico': {
+        termino: 'correo electrónico',
+        explicacion: 'El correo electrónico es de los años setenta, y se populariza en los noventa.',
+        epoca: 'En 1912 se mandaba una carta o, si había prisa, un cable.',
+      },
+      'nailon': {
+        termino: 'nailon',
+        explicacion: 'DuPont lo presenta en 1938.',
+        epoca: 'En 1912 las maletas eran de cuero, de cartón o de mimbre.',
+      },
+    },
+    trampas: {
+      'titanic': { termino: 'Titanic', explicacion: 'Zarpó de Southampton el 10 de abril de 1912.' },
+      'transatlántico': { termino: 'transatlántico', explicacion: 'La palabra era habitual en 1912.' },
+      'telegrafista': { termino: 'telegrafista', explicacion: 'El Titanic llevaba dos operadores de la compañía Marconi.' },
+      'piscina': { termino: 'piscina', explicacion: 'El Titanic tenía piscina cubierta, algo rarísimo entonces.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-02',
+    anio: 1741,
+    encabezado: 'En Cartagena de Indias, a 22 de mayo de 1741',
+    saludo: 'Querida esposa:',
+    parrafos: [
+      'Por fin se han ido los ingleses. El almirante Vernon llegó en marzo con la mayor flota que se ha visto en estos mares, y dicen que en Londres ya habían acuñado medallas celebrando una victoria que no ha tenido.',
+      'Don Blas de Lezo, cojo, manco y tuerto, ha defendido la ciudad con un puñado de hombres, y el castillo de San Felipe ha resistido. Las fiebres y el vómito negro han hecho el resto.',
+      'Los ingleses traían dinamita para volar las murallas, ametralladoras para barrer los baluartes y hasta un submarino, pero no les sirvió de nada.',
+    ],
+    despedida: 'Tu marido, que pronto te abrazará,',
+    firma: 'Sebastián',
+    gazapos: {
+      'dinamita': {
+        termino: 'dinamita',
+        explicacion: 'Nobel la patenta en 1867.',
+        epoca: 'En 1741 se abrían brechas con minas de pólvora y a cañonazos.',
+      },
+      'ametralladoras': {
+        termino: 'ametralladora',
+        explicacion: 'Las ametralladoras son de la segunda mitad del siglo XIX.',
+        epoca: 'En 1741 se barría un baluarte con metralla de cañón y descargas de fusilería.',
+      },
+      'submarino': {
+        termino: 'submarino',
+        explicacion: 'Los submarinos de guerra son del siglo XIX, y la palabra también.',
+        epoca: 'En 1741 la guerra en el mar se hacía con navíos de línea y brulotes.',
+      },
+    },
+    trampas: {
+      'vernon': { termino: 'Vernon', explicacion: 'Edward Vernon mandó el ataque a Cartagena de Indias en 1741.' },
+      'lezo': { termino: 'Blas de Lezo', explicacion: 'Dirigió la defensa de la ciudad; murió ese mismo año.' },
+      'medallas': { termino: 'medalla', explicacion: 'En Inglaterra se acuñaron medallas que daban la victoria por hecha.' },
+      'vómito': { termino: 'vómito negro', explicacion: 'Así se llamaba entonces a la fiebre amarilla.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-03',
+    anio: 1469,
+    encabezado: 'En Valladolid, a 20 de octubre de 1469',
+    saludo: 'Muy querida prima:',
+    parrafos: [
+      'Ayer se casaron en el palacio de los Vivero la princesa Isabel y el príncipe don Fernando de Aragón, que llegó disfrazado de mozo de mulas para que no lo prendieran. Dicen que la dispensa del Papa es falsa, pero nadie lo dirá en voz alta.',
+      'Hubo vihuelas, danzas y un banquete con cabrito, empanadas y chocolate caliente, que la princesa apenas probó.',
+      'Ya hay quien los llama los Reyes Católicos y jura que algún día reinarán en toda España. Yo, por si acaso, he comprado tabaco para celebrarlo.',
+    ],
+    despedida: 'Tu prima, que te quiere,',
+    firma: 'Beatriz',
+    gazapos: {
+      'chocolate': {
+        termino: 'chocolate',
+        explicacion: 'El cacao llega a España desde América en el siglo XVI.',
+        epoca: 'Un banquete castellano de 1469 se remataba con frutas, confites y vino.',
+      },
+      'católicos': {
+        termino: 'Reyes Católicos',
+        explicacion: 'El papa Alejandro VI les da ese título en 1496.',
+        epoca: 'En 1469 eran solo los príncipes Isabel y Fernando.',
+      },
+      'tabaco': {
+        termino: 'tabaco',
+        explicacion: 'Los europeos lo conocen con el primer viaje de Colón, en 1492.',
+        epoca: 'En 1469 se habría celebrado con un buen vino de Toro.',
+      },
+    },
+    trampas: {
+      'vivero': { termino: 'palacio de los Vivero', explicacion: 'La boda se celebró allí el 19 de octubre de 1469.' },
+      'dispensa': { termino: 'dispensa', explicacion: 'Como eran primos, necesitaban la dispensa del Papa, y la que presentaron se tiene por falsificada.' },
+      'vihuelas': { termino: 'vihuela', explicacion: 'El instrumento de cuerda era muy popular en el siglo XV.' },
+      'mulas': { termino: 'mozo de mulas', explicacion: 'Fernando atravesó Castilla disfrazado para que no lo detuvieran.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-04',
+    anio: 1992,
+    encabezado: 'En Sevilla, a 21 de abril de 1992',
+    saludo: 'Querida Inma:',
+    parrafos: [
+      'Ayer abrieron la Expo, y esta mañana ha llegado el primer AVE comercial desde Madrid, en menos de tres horas. En la isla de la Cartuja hay pabellones de más de cien países, y Curro, la mascota, está por todas partes.',
+      'En el pabellón de Telefónica te enseñan un teléfono móvil del tamaño de un ladrillo, y en la oficina ya mandamos los pedidos por fax.',
+      'Te mando un tuit con las fotos, y si quieres verlo en directo, te hago una videollamada desde el móvil. Ah, y la entrada se paga en euros.',
+    ],
+    despedida: 'Un abrazo,',
+    firma: 'Paco',
+    gazapos: {
+      'tuit': {
+        termino: 'tuit',
+        explicacion: 'Twitter nace en 2006.',
+        epoca: 'En 1992 las fotos se mandaban por correo, después de revelar el carrete.',
+      },
+      'videollamada': {
+        termino: 'videollamada',
+        explicacion: 'Las videollamadas se popularizan con los teléfonos inteligentes, ya en el siglo XXI.',
+        epoca: 'En 1992, para ver la Expo en directo, había que encender la tele.',
+      },
+      'euros': {
+        termino: 'euro',
+        explicacion: 'El euro nace en 1999 y se usa en la calle desde 2002.',
+        epoca: 'En 1992 la entrada de la Expo se pagaba en pesetas.',
+      },
+    },
+    trampas: {
+      'ave': { termino: 'AVE', explicacion: 'El tren de alta velocidad Madrid-Sevilla empezó a funcionar en abril de 1992.' },
+      'curro': { termino: 'Curro', explicacion: 'La mascota de la Expo 92.' },
+      'móvil': { termino: 'móvil', explicacion: 'En 1992 ya había en España teléfonos móviles, grandes y caros.' },
+      'fax': { termino: 'fax', explicacion: 'En 1992 era imprescindible en cualquier oficina.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-05',
+    anio: 1752,
+    encabezado: 'En Filadelfia, a 1 de julio de 1752',
+    saludo: 'Querido hermano:',
+    parrafos: [
+      'Aquí todos hablan del señor Franklin, el impresor. Dicen que, en plena tormenta, echó a volar una cometa con una llave atada al hilo, y sacó chispas de las nubes.',
+      'Asegura que el rayo y la electricidad son la misma cosa, y que esa fuerza puede guardarse en una botella de Leiden. Ya imagina poner en cada casa una bombilla que alumbre sin aceite.',
+      'Me ha prometido que algún día hablaremos por teléfono de una orilla a otra del océano. Mientras, te escribo esta carta, que tardará dos meses en llegar, y te mando unas fotografías de la ciudad.',
+    ],
+    despedida: 'Tu hermano,',
+    firma: 'Antonio',
+    gazapos: {
+      'bombilla': {
+        termino: 'bombilla',
+        explicacion: 'La bombilla incandescente práctica es de 1879.',
+        epoca: 'En 1752 se alumbraban con velas y candiles.',
+      },
+      'teléfono': {
+        termino: 'teléfono',
+        explicacion: 'Bell lo patenta en 1876.',
+        epoca: 'En 1752 solo se podía escribir y esperar.',
+      },
+      'fotografías': {
+        termino: 'fotografía',
+        explicacion: 'La fotografía nace en 1839.',
+        epoca: 'En 1752 se mandaban grabados o dibujos.',
+      },
+    },
+    trampas: {
+      'franklin': { termino: 'Franklin', explicacion: 'Su experimento de la cometa se fecha en junio de 1752.' },
+      'cometa': { termino: 'cometa', explicacion: 'La cometa de juguete era conocida desde hacía siglos.' },
+      'electricidad': { termino: 'electricidad', explicacion: 'La palabra existía desde el siglo XVII.' },
+      'leiden': { termino: 'botella de Leiden', explicacion: 'Se inventó en 1745.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-06',
+    anio: 1520,
+    encabezado: 'En el puerto de San Julián, a 20 de agosto de 1520',
+    saludo: 'Muy querido padre:',
+    parrafos: [
+      'Le escribo desde esta bahía helada donde Magallanes nos ha hecho invernar. En abril se amotinaron los capitanes de tres naos: Mendoza murió a puñaladas y Quesada ha sido ajusticiado.',
+      'Hemos visto a un hombre tan alto que le llegábamos a la cintura. El capitán general los llama patagones.',
+      'Ahora que acaba el invierno seguiremos hacia el sur hasta encontrar el paso al mar Pacífico. Dicen que más al norte hay un gran río, el de Solís, cuya tierra llegará a llamarse Argentina, y unas islas Malvinas donde pescan los franceses.',
+    ],
+    despedida: 'Su hijo, que le pide la bendición,',
+    firma: 'Martín',
+    gazapos: {
+      'pacífico': {
+        termino: 'Pacífico',
+        explicacion: 'Magallanes lo bautizó así al salir del estrecho, en noviembre de 1520.',
+        epoca: 'En agosto de 1520 se hablaba de la Mar del Sur.',
+      },
+      'argentina': {
+        termino: 'Argentina',
+        explicacion: 'El nombre, por la plata que buscaban los conquistadores, se usa desde principios del siglo XVII.',
+        epoca: 'En 1520 aquella tierra no tenía nombre para los españoles.',
+      },
+      'malvinas': {
+        termino: 'Malvinas',
+        explicacion: 'El nombre viene de los marinos de Saint-Malo que llegaron a las islas en el siglo XVIII.',
+        epoca: 'En 1520 nadie las había avistado aún con seguridad.',
+      },
+    },
+    trampas: {
+      'magallanes': { termino: 'Magallanes', explicacion: 'Invernó en San Julián de abril a agosto de 1520.' },
+      'patagones': { termino: 'patagón', explicacion: 'Así llamaron los hombres de Magallanes a los tehuelches en 1520.' },
+      'naos': { termino: 'nao', explicacion: 'La flota de Magallanes era de cinco naos.' },
+      'solís': { termino: 'Solís', explicacion: 'Juan Díaz de Solís llegó al estuario en 1516.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-07',
+    anio: 1896,
+    encabezado: 'En Madrid, a 16 de mayo de 1896',
+    saludo: 'Querida Pilar:',
+    parrafos: [
+      'Ayer vimos el cinematógrafo de los hermanos Lumière en el hotel Rusia, en la Carrera de San Jerónimo. Un tren entraba en una estación y las señoras se echaban hacia atrás, asustadas.',
+      'A la salida, mi primo nos llevó en bicicleta hasta Sol, y en casa de los Osorio oímos un fonógrafo que repite las voces como un loro.',
+      'Dicen que pronto podremos ver estas imágenes en casa, en una televisión, y oír la música por la radio. Mi tío asegura que algún día las cuentas de la casa las hará un ordenador.',
+    ],
+    despedida: 'Tu amiga,',
+    firma: 'Concha',
+    gazapos: {
+      'televisión': {
+        termino: 'televisión',
+        explicacion: 'Las primeras emisiones de televisión son de los años veinte y treinta; en España llega en 1956.',
+        epoca: 'En 1896 las imágenes en movimiento solo se veían en el cinematógrafo.',
+      },
+      'radio': {
+        termino: 'radio',
+        explicacion: 'Las emisiones de radio para el público empiezan en los años veinte.',
+        epoca: 'En 1896 la música se oía en el fonógrafo o en el teatro.',
+      },
+      'ordenador': {
+        termino: 'ordenador',
+        explicacion: 'Los ordenadores aparecen a mediados del siglo XX, y el nombre en España es de los sesenta.',
+        epoca: 'En 1896 las cuentas se hacían a mano o con una máquina de calcular mecánica.',
+      },
+    },
+    trampas: {
+      'cinematógrafo': { termino: 'cinematógrafo', explicacion: 'La primera sesión en Madrid fue el 15 de mayo de 1896, en el hotel Rusia.' },
+      'lumière': { termino: 'Lumière', explicacion: 'Los hermanos Lumière lo presentaron en París en diciembre de 1895.' },
+      'bicicleta': { termino: 'bicicleta', explicacion: 'En 1896 estaba de moda en Madrid.' },
+      'fonógrafo': { termino: 'fonógrafo', explicacion: 'Edison lo inventó en 1877.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-08',
+    anio: 1808,
+    encabezado: 'En Madrid, a 3 de mayo de 1808',
+    saludo: 'Querido hijo:',
+    parrafos: [
+      'Ayer el pueblo se levantó contra los franceses cuando quisieron llevarse al infante don Francisco de Paula. En la Puerta del Sol cargaron los mamelucos de Murat, y en el parque de Monteleón resistieron los capitanes Daoíz y Velarde.',
+      'Esta madrugada han fusilado a muchos en la montaña del Príncipe Pío.',
+      'No salgas de casa. Han cerrado el metro, no pasan tranvías por la calle Mayor y solo se oyen las metralletas de los franceses.',
+    ],
+    despedida: 'Tu madre, que no deja de rezar por ti,',
+    firma: 'Josefa',
+    gazapos: {
+      'metro': {
+        termino: 'metro',
+        explicacion: 'El metro de Madrid se inaugura en 1919.',
+        epoca: 'En 1808 Madrid se recorría a pie, en calesa o en coche de caballos.',
+      },
+      'tranvías': {
+        termino: 'tranvía',
+        explicacion: 'Los primeros tranvías de Madrid, tirados por mulas, son de 1871.',
+        epoca: 'En 1808 por la calle Mayor pasaban carros y coches de caballos.',
+      },
+      'metralletas': {
+        termino: 'metralleta',
+        explicacion: 'Las metralletas son armas del siglo XX.',
+        epoca: 'Los franceses de 1808 disparaban fusiles de chispa y cañones.',
+      },
+    },
+    trampas: {
+      'mamelucos': { termino: 'mameluco', explicacion: 'Napoleón traía un escuadrón de mamelucos, jinetes egipcios.' },
+      'murat': { termino: 'Murat', explicacion: 'Joaquín Murat mandaba las tropas francesas en Madrid.' },
+      'daoíz': { termino: 'Daoíz', explicacion: 'Luis Daoíz murió defendiendo el parque de Monteleón el 2 de mayo de 1808.' },
+      'monteleón': { termino: 'Monteleón', explicacion: 'El parque de artillería donde resistieron Daoíz y Velarde.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-09',
+    anio: 1776,
+    encabezado: 'En el presidio de San Francisco, a 10 de octubre de 1776',
+    saludo: 'Querida madre:',
+    parrafos: [
+      'Ayer se celebró la fundación solemne de la misión de San Francisco de Asís, que atiende el padre Palóu, junto a una laguna que llaman de los Dolores. El teniente Moraga ha levantado el presidio en la punta que mira a la bahía.',
+      'Dentro de la bahía hay una isla llena de pelícanos que don Juan Manuel de Ayala llamó de los Alcatraces. Los indios de la tierra pescan en balsas de juncos.',
+      'Dicen que más al sur se fundará otro pueblo, el de Los Ángeles, y que algún día allí se harán películas en Hollywood. Yo me conformo con que el ferrocarril llegue hasta aquí y pueda ir a veros.',
+    ],
+    despedida: 'Su hijo,',
+    firma: 'Juan Bautista',
+    gazapos: {
+      'ángeles': {
+        termino: 'Los Ángeles',
+        explicacion: 'El pueblo de Nuestra Señora la Reina de los Ángeles se funda en 1781.',
+        epoca: 'En 1776 en aquella llanura solo había aldeas de los tongva.',
+      },
+      'hollywood': {
+        termino: 'Hollywood',
+        explicacion: 'El barrio nace a finales del siglo XIX, y el cine llega en la década de 1910.',
+        epoca: 'En 1776 no había cine en ninguna parte del mundo.',
+      },
+      'ferrocarril': {
+        termino: 'ferrocarril',
+        explicacion: 'El primer ferrocarril llega a California en 1869.',
+        epoca: 'En 1776 se viajaba a caballo, en carreta o en barco.',
+      },
+    },
+    trampas: {
+      'palóu': { termino: 'Palóu', explicacion: 'Fray Francisco Palóu fundó la misión de Dolores en 1776; la ceremonia solemne fue el 9 de octubre.' },
+      'moraga': { termino: 'Moraga', explicacion: 'José Joaquín Moraga fundó el presidio en septiembre de 1776.' },
+      'alcatraces': { termino: 'Alcatraz', explicacion: 'Ayala bautizó la isla en 1775 por las aves marinas.' },
+      'dolores': { termino: 'Dolores', explicacion: 'La misión toma su nombre popular de la laguna de los Dolores.' },
+    },
+  },
+
+  {
+    fecha: '2026-12-10',
+    anio: 1910,
+    encabezado: 'En Granada, a 19 de mayo de 1910',
+    saludo: 'Querida Lola:',
+    parrafos: [
+      'Anoche la Tierra atravesó la cola del cometa Halley. Media Granada se subió a la Alhambra a mirar el cielo, y muchos no se acostaron porque decían que el gas de la cola nos iba a envenenar a todos.',
+      'En la farmacia vendían píldoras y antibióticos contra el cometa, y el boticario ha hecho su agosto. Hasta salió en el periódico una foto tomada desde un aeroplano.',
+      'Yo, que soy moderno, dije que no pasaría nada, y aquí estamos. Dicen que la próxima vez, en 1986, lo verán los astronautas desde su nave, y los demás nos enteraremos por internet.',
+    ],
+    despedida: 'Tu prima,',
+    firma: 'Amparo',
+    gazapos: {
+      'antibióticos': {
+        termino: 'antibiótico',
+        explicacion: 'La penicilina se descubre en 1928 y la palabra «antibiótico» es de los años cuarenta.',
+        epoca: 'En 1910 se vendían píldoras y jarabes milagrosos.',
+      },
+      'astronautas': {
+        termino: 'astronauta',
+        explicacion: 'La palabra nace a finales de los años veinte, y el primer hombre en el espacio es de 1961.',
+        epoca: 'En 1910 se hablaba de viajes a la Luna solo en las novelas de Julio Verne.',
+      },
+      'internet': {
+        termino: 'internet',
+        explicacion: 'La red llega a las casas en los años noventa.',
+        epoca: 'En 1910 las noticias llegaban por el periódico y el telégrafo.',
+      },
+    },
+    trampas: {
+      'halley': { termino: 'Halley', explicacion: 'La Tierra atravesó la cola del cometa en la noche del 18 al 19 de mayo de 1910.' },
+      'gas': { termino: 'gas', explicacion: 'Se había detectado cianógeno en la cola, y eso desató el miedo.' },
+      'aeroplano': { termino: 'aeroplano', explicacion: 'En 1910 ya volaban en Europa y se hacían fotos desde ellos.' },
+      'píldoras': { termino: 'píldora', explicacion: 'Hubo quien vendió «píldoras anticometa».' },
+    },
+  },
 ];
