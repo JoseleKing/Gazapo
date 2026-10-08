@@ -14,6 +14,7 @@
   // Al compartir: verde, gazapo cazado; rojo, borrón (trampa o fallo).
   var EMOJI = { gazapo: '🟩', trampa: '🟥', fallo: '🟥' };
   var PALABRA = /[\p{L}\p{M}]+/gu;
+  var URL_JUEGO = 'https://joseleking.github.io/Gazapo/';
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -340,7 +341,21 @@
     var b = borrones();
     var cuadros = estado.intentos.map(function (i) { return EMOJI[i.tipo]; }).join('');
     return 'Gazapo · ' + fechaCorta(reto.fecha) + '\n' + cuadros + '\n' +
-      c + '/' + TOTAL_GAZAPOS + ' gazapos · ' + b + (b === 1 ? ' borrón' : ' borrones');
+      c + '/' + TOTAL_GAZAPOS + ' gazapos · ' + b + (b === 1 ? ' borrón' : ' borrones') + '\n' +
+      URL_JUEGO;
+  }
+
+  // En el móvil abre el menú de compartir del sistema (WhatsApp, X, Bluesky…).
+  // Donde no lo hay, o si falla, copia el texto.
+  function compartir() {
+    $('aviso-copia').textContent = '';
+    if (navigator.share) {
+      navigator.share({ text: textoCompartir() }).catch(function (e) {
+        if (!e || e.name !== 'AbortError') copiar();
+      });
+    } else {
+      copiar();
+    }
   }
 
   function pintarFinal(enfocar) {
@@ -527,7 +542,7 @@
     $('btn-marcar').addEventListener('click', confirmar);
     window.addEventListener('resize', colocarBurbuja);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(colocarBurbuja);
-    $('btn-copiar').addEventListener('click', copiar);
+    $('btn-compartir').addEventListener('click', compartir);
 
     if (terminada()) pintarFinal(false);
     retirarPortada(prepararInstrucciones);
