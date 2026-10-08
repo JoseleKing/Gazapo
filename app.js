@@ -11,7 +11,8 @@
   var PREFIJO_PARTIDA = 'gazapo:partida:';
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   var MESES_CORTOS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'];
-  var EMOJI = { gazapo: '🟥', trampa: '🟫', fallo: '⬛' };
+  // Al compartir: verde, gazapo cazado; rojo, borrón (trampa o fallo).
+  var EMOJI = { gazapo: '🟩', trampa: '🟥', fallo: '🟥' };
   var PALABRA = /[\p{L}\p{M}]+/gu;
 
   var $ = function (id) { return document.getElementById(id); };
