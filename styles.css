@@ -1,0 +1,677 @@
+/* ==========================================================================
+   Gazapo — estilos
+   Los colores están definidos como variables; el modo oscuro solo las redefine.
+   ========================================================================== */
+
+:root {
+  --papel: #f3ead7;
+  --papel-borde: #e2d3b2;
+  --hoja: #faf3e3;
+  --tinta: #2b2118;
+  --tinta-suave: #5e4e3c;
+  --regla: #8b7355;
+  --regla-suave: #cdb994;
+  --sombra: rgba(70, 45, 15, 0.22);
+  --acento: #a8321e;
+  --acento-tenue: rgba(168, 50, 30, 0.1);
+
+  --fuente-titulo: "IM Fell DW Pica", "IM Fell English", Georgia, "Times New Roman", serif;
+  --fuente-versalitas: "IM Fell DW Pica SC", "IM Fell DW Pica", Georgia, serif;
+  --fuente-texto: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
+
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #1c1813;
+    --papel-borde: #0f0d0a;
+    --hoja: #27211a;
+    --tinta: #eadfc8;
+    --tinta-suave: #b5a68c;
+    --regla: #8a7759;
+    --regla-suave: #4a3f31;
+    --sombra: rgba(0, 0, 0, 0.55);
+    --acento: #e0715a;
+    --acento-tenue: rgba(224, 113, 90, 0.14);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --papel: #1c1813;
+  --papel-borde: #0f0d0a;
+  --hoja: #27211a;
+  --tinta: #eadfc8;
+  --tinta-suave: #b5a68c;
+  --regla: #8a7759;
+  --regla-suave: #4a3f31;
+  --sombra: rgba(0, 0, 0, 0.55);
+  --acento: #e0715a;
+  --acento-tenue: rgba(224, 113, 90, 0.14);
+  color-scheme: dark;
+}
+
+/* --- Base ---------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--papel);
+  /* Viñeta de papel envejecido: bordes algo más oscuros. */
+  background-image: radial-gradient(ellipse at center, transparent 55%, var(--papel-borde) 130%);
+  background-attachment: fixed;
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: 1.125rem;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.pagina {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 max(1rem, env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+
+/* --- Cabecera ------------------------------------------------------------ */
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0 0.75rem;
+  border-bottom: 1px solid var(--regla-suave);
+}
+
+.cabecera__logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: 22%;
+  box-shadow: 0 0 0 1px var(--regla-suave);
+}
+
+.cabecera__titulos {
+  flex: 1;
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.subtitulo {
+  margin: 0.2rem 0 0;
+  font-family: var(--fuente-versalitas);
+  font-size: 0.95rem;
+  color: var(--tinta-suave);
+  letter-spacing: 0.03em;
+}
+
+.boton-ayuda {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--regla);
+  border-radius: 50%;
+  background: var(--hoja);
+  font-family: var(--fuente-titulo);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.boton-ayuda:hover {
+  border-color: var(--tinta);
+}
+
+/* --- Fecha y marcador ---------------------------------------------------- */
+
+.fecha-reto {
+  margin: 1rem 0 0.5rem;
+  text-align: center;
+  font-family: var(--fuente-versalitas);
+  color: var(--tinta-suave);
+  letter-spacing: 0.04em;
+}
+
+.marcador {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 0 1rem;
+}
+
+.marcador__grupo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.marcador__etiqueta {
+  font-family: var(--fuente-versalitas);
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+  letter-spacing: 0.05em;
+}
+
+.marcador__marcas {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.marcador__marcas svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+}
+
+.marca-circulo {
+  fill: none;
+  stroke: var(--regla);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+.marca-circulo--llena {
+  stroke: var(--acento);
+  stroke-width: 2.4;
+  stroke-dasharray: none;
+}
+
+.marca-gota {
+  fill: none;
+  stroke: var(--regla);
+  stroke-width: 1.5;
+}
+
+.marca-gota--llena {
+  fill: var(--tinta);
+  stroke: var(--tinta);
+}
+
+.marca--nueva {
+  animation: sello 0.45s ease-out;
+}
+
+/* --- La carta ------------------------------------------------------------ */
+
+.hoja {
+  position: relative;
+  background: var(--hoja);
+  border: 1px solid var(--regla-suave);
+  box-shadow: 0 1px 2px var(--sombra), 0 8px 24px -12px var(--sombra);
+  padding: 1.25rem 1rem 1.5rem;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  hyphens: manual;
+}
+
+@media (min-width: 30rem) {
+  .hoja {
+    padding: 2rem 2.25rem 2.25rem;
+  }
+}
+
+.carta__encabezado {
+  margin: 0 0 1.25rem;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  text-align: right;
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+.carta__saludo {
+  margin: 0 0 0.75rem;
+  font-family: var(--fuente-versalitas);
+  letter-spacing: 0.02em;
+}
+
+.carta__parrafo {
+  margin: 0 0 0.9rem;
+  text-indent: 1.5em;
+  text-align: left;
+}
+
+.carta__despedida {
+  margin: 1.25rem 0 0;
+}
+
+.carta__firma {
+  margin: 0;
+  text-align: right;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+.trozo {
+  white-space: nowrap;
+}
+
+/* Cada palabra es un botón, pero se lee como texto corrido. */
+.palabra {
+  position: relative;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: inherit;
+  vertical-align: baseline;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  border-radius: 0.2em;
+}
+
+/* Zona de toque algo más alta que la palabra, sin separar los renglones. */
+button.palabra::before {
+  content: "";
+  position: absolute;
+  top: -0.25em;
+  bottom: -0.25em;
+  left: -0.05em;
+  right: -0.05em;
+}
+
+button.palabra:hover:not([aria-disabled="true"]) {
+  background: var(--acento-tenue);
+}
+
+button.palabra:focus-visible {
+  outline-offset: 0;
+}
+
+button.palabra[aria-disabled="true"] {
+  cursor: default;
+}
+
+
+/* Círculo a mano alzada, común a selección, gazapo y revelado. */
+.palabra--seleccionada::after,
+.palabra--gazapo::after,
+.palabra--revelada::after {
+  content: "";
+  position: absolute;
+  top: 0.32em;
+  bottom: 0.28em;
+  left: -0.2em;
+  right: -0.2em;
+  border: 2px dashed var(--acento);
+  border-radius: 50% 46% 54% 48% / 56% 50% 48% 52%;
+  pointer-events: none;
+  transform: rotate(-2deg);
+}
+
+.palabra--seleccionada {
+  color: var(--acento);
+}
+
+.palabra--gazapo {
+  color: var(--acento);
+}
+
+.palabra--gazapo::after {
+  border-style: solid;
+  border-width: 2.5px;
+  animation: sello 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2);
+}
+
+.palabra--quieta::after {
+  animation: none;
+}
+
+.palabra--revelada::after {
+  opacity: 0.75;
+  transform: rotate(2deg);
+}
+
+.palabra--trampa {
+  color: var(--tinta-suave);
+  text-decoration: underline wavy var(--regla);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.22em;
+}
+
+.palabra--fallo {
+  color: var(--tinta-suave);
+  text-decoration: line-through var(--tinta);
+  text-decoration-thickness: 2px;
+}
+
+/* Nota que se está mostrando: un leve resalte. */
+.palabra--consultada {
+  background: var(--acento-tenue);
+}
+
+@keyframes sello {
+  0% { transform: scale(1.6) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(0.94) rotate(-1deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+}
+
+/* --- Nota del corrector -------------------------------------------------- */
+
+.nota {
+  margin: 1.25rem 0 0;
+  padding: 0.75rem 1rem 0.85rem 1.1rem;
+  background: var(--hoja);
+  border: 1px solid var(--regla-suave);
+  border-left: 4px solid var(--regla);
+  scroll-margin-bottom: 1rem;
+}
+
+.nota--gazapo {
+  border-left-color: var(--acento);
+}
+
+.nota--trampa {
+  border-left-color: var(--regla-suave);
+}
+
+.nota__etiqueta {
+  margin: 0 0 0.3rem;
+  font-family: var(--fuente-versalitas);
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+  letter-spacing: 0.05em;
+}
+
+.nota p {
+  margin: 0 0 0.4rem;
+}
+
+.nota p:last-child {
+  margin-bottom: 0;
+}
+
+.nota__veredicto {
+  font-family: var(--fuente-versalitas);
+  letter-spacing: 0.02em;
+}
+
+.nota--gazapo .nota__veredicto {
+  color: var(--acento);
+}
+
+.nota__epoca {
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+/* --- Botones ------------------------------------------------------------- */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.4rem;
+  font-family: var(--fuente-texto);
+  font-size: 1.1rem;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.boton--principal {
+  border: 1px solid var(--acento);
+  background: var(--acento);
+  color: var(--hoja);
+}
+
+.boton--principal:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.boton--principal:disabled {
+  background: transparent;
+  border-color: var(--regla-suave);
+  color: var(--tinta-suave);
+  cursor: default;
+}
+
+.boton--secundario {
+  border: 1px solid var(--regla);
+  background: transparent;
+  color: var(--tinta);
+}
+
+.boton--secundario:hover {
+  border-color: var(--tinta);
+}
+
+/* Burbuja de confirmación: flota justo debajo de la palabra seleccionada. */
+.burbuja {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  width: max-content;
+  max-width: calc(100% - 1rem);
+  text-indent: 0;
+  font-style: normal;
+  white-space: normal;
+  font-size: 1rem;
+  line-height: 1.2;
+  filter: drop-shadow(0 4px 10px var(--sombra));
+  animation: asomar 0.18s ease-out;
+}
+
+.burbuja[hidden] {
+  display: none;
+}
+
+/* Piquito que señala la palabra. */
+.burbuja::before {
+  content: "";
+  position: absolute;
+  top: -0.45rem;
+  left: var(--piquito, 50%);
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: -0.45rem;
+  background: var(--acento);
+  transform: rotate(45deg);
+  border-radius: 0.15rem;
+}
+
+.boton--marcar {
+  position: relative;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: none;
+}
+
+@keyframes asomar {
+  from { opacity: 0; transform: translateY(-0.3rem); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Pantalla final ------------------------------------------------------ */
+
+.final {
+  margin: 1.5rem 0 0;
+  padding: 1.25rem 1.25rem 1rem;
+  text-align: center;
+  border-top: 1px solid var(--regla-suave);
+}
+
+.final__titulo {
+  margin: 0 0 0.4rem;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+
+.final__titulo:focus {
+  outline: none;
+}
+
+.final__resumen {
+  margin: 0 0 1rem;
+  color: var(--tinta-suave);
+}
+
+.final__compartir {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--hoja);
+  border: 1px dashed var(--regla);
+  font-family: var(--fuente-texto);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-align: left;
+  white-space: pre-wrap;
+  -webkit-user-select: all;
+  user-select: all;
+}
+
+.final__botones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.final__aviso {
+  min-height: 1.45em;
+  margin: 0.6rem 0 0;
+  font-size: 0.95rem;
+  color: var(--tinta-suave);
+}
+
+.final__manana {
+  margin: 0.25rem 0 0;
+  font-family: var(--fuente-versalitas);
+  color: var(--tinta-suave);
+}
+
+/* --- Instrucciones ------------------------------------------------------- */
+
+.modal {
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--regla);
+  background: var(--hoja);
+  color: var(--tinta);
+  box-shadow: 0 12px 40px -8px var(--sombra);
+}
+
+.modal::backdrop {
+  background: rgba(30, 20, 10, 0.45);
+}
+
+.modal__hoja {
+  position: relative;
+  padding: 1.5rem 1.4rem 1.25rem;
+}
+
+.modal__titulo {
+  margin: 0 2.5rem 0.75rem 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+
+.modal h3 {
+  margin: 1rem 0 0.25rem;
+  font-family: var(--fuente-versalitas);
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+}
+
+.modal p {
+  margin: 0 0 0.5rem;
+}
+
+.modal__cerrar {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  background: none;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal__manana {
+  margin-top: 1rem !important;
+  font-family: var(--fuente-versalitas);
+  color: var(--tinta-suave);
+}
+
+.leyenda {
+  margin: 0.25rem 0 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.leyenda li {
+  margin: 0.35rem 0;
+}
+
+.leyenda .palabra {
+  cursor: default;
+  margin-right: 0.35em;
+  margin-left: 0.3em;
+}
+
+/* --- Movimiento reducido ------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

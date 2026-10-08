@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gazapo</title>
+  <meta name="description" content="Cazadores de anacronismos: cada día, un texto de otra época con tres palabras que no podían estar ahí.">
+  <!-- Vista previa al compartir el enlace: el icono del juego. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Almanaque">
+  <meta property="og:title" content="Gazapo">
+  <meta property="og:description" content="Cazadores de anacronismos: cada día, un texto de otra época con tres palabras que no podían estar ahí.">
+  <meta property="og:url" content="https://joseleking.github.io/Gazapo/">
+  <meta property="og:image" content="https://joseleking.github.io/Gazapo/icons/gazapo-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="Icono de Gazapo">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#f3ead7">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    // Modo claro u oscuro: el que se elija en Almanaque, común a todos los juegos.
+    // Sin elección guardada, manda la preferencia del sistema.
+    try {
+      var tema = localStorage.getItem('almanaque:tema');
+      if (tema === 'dark' || tema === 'light') document.documentElement.dataset.theme = tema;
+      var oscuro = tema === 'dark' || (!tema && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (oscuro) document.querySelector('meta[name="theme-color"]').content = '#1c1813';
+    } catch (e) {}
+  </script>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="icons/gazapo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Gazapo">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+DW+Pica:ital@0;1&family=IM+Fell+DW+Pica+SC&display=swap">
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="volver-almanaque.js" defer></script>
+  <script src="retos.js" defer></script>
+  <script src="app.js" defer></script>
+
+  <!-- Portada en línea: se pinta antes de que cargue styles.css. Repite los colores de :root. -->
+  <style>
+    #portada {
+      position: fixed; inset: 0; z-index: 10;
+      display: grid; place-content: center; justify-items: center; gap: 0.9rem;
+      background: #f3ead7; color: #2b2118;
+      transition: opacity 0.4s, visibility 0.4s;
+      /* Por si app.js no llega a retirarla. */
+      animation: retirar 0.4s 5s forwards;
+    }
+    #portada img { width: 7.5rem; height: 7.5rem; border-radius: 22%; box-shadow: 0 0 0 1px #cdb994; animation: asomar 0.5s ease-out; }
+    #portada p { margin: 0; font: 2.6rem/1 "IM Fell DW Pica", "IM Fell English", Georgia, serif; animation: asomar 0.5s ease-out; }
+    #portada.oculta { opacity: 0; visibility: hidden; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) #portada { background: #1c1813; color: #eadfc8; }
+      :root:not([data-theme="light"]) #portada img { box-shadow: 0 0 0 1px #4a3f31; }
+    }
+    [data-theme="dark"] #portada { background: #1c1813; color: #eadfc8; }
+    [data-theme="dark"] #portada img { box-shadow: 0 0 0 1px #4a3f31; }
+    @keyframes asomar { from { opacity: 0; transform: scale(0.9); } }
+    @keyframes retirar { to { opacity: 0; visibility: hidden; } }
+    @media (prefers-reduced-motion: reduce) { #portada img, #portada p { animation: none; } }
+  </style>
+</head>
+<body>
+  <div id="portada" aria-hidden="true"><img src="icons/gazapo-portada.svg" width="120" height="120" alt=""><p>Gazapo</p></div>
+  <div class="pagina">
+    <header class="cabecera">
+      <img class="cabecera__logo" src="icons/gazapo.svg" alt="" width="44" height="44">
+      <div class="cabecera__titulos">
+        <h1 class="titulo">Gazapo</h1>
+        <p class="subtitulo">Cazadores de anacronismos</p>
+      </div>
+      <button type="button" id="btn-ayuda" class="boton-ayuda" aria-label="Cómo se juega" aria-haspopup="dialog">?</button>
+    </header>
+
+    <main id="juego" class="juego">
+      <p id="fecha-reto" class="fecha-reto"></p>
+
+      <!-- Marcador: tres círculos para los gazapos y tres gotas para los borrones. -->
+      <div class="marcador" id="marcador">
+        <div class="marcador__grupo">
+          <span class="marcador__etiqueta">Gazapos</span>
+          <span class="marcador__marcas" id="marcas-gazapos"></span>
+        </div>
+        <div class="marcador__grupo">
+          <span class="marcador__etiqueta">Borrones</span>
+          <span class="marcador__marcas" id="marcas-borrones"></span>
+        </div>
+      </div>
+
+      <article class="hoja" id="carta" aria-label="Carta del día"></article>
+
+      <aside class="nota" id="nota" aria-live="polite" hidden>
+        <p class="nota__etiqueta">Nota del corrector</p>
+        <div id="nota-cuerpo"></div>
+      </aside>
+
+      <section class="final" id="final" hidden aria-labelledby="final-titulo">
+        <h2 class="final__titulo" id="final-titulo" tabindex="-1"></h2>
+        <p class="final__resumen" id="final-resumen"></p>
+        <pre class="final__compartir" id="compartir-texto"></pre>
+        <div class="final__botones">
+          <button type="button" class="boton boton--principal" id="btn-copiar">Copiar resultado</button>
+          <a data-almanaque-volver hidden class="boton boton--secundario" href="https://joseleking.github.io/Almanaque/">Volver a Almanaque</a>
+        </div>
+        <p class="final__aviso" id="aviso-copia" aria-live="polite"></p>
+        <p class="final__manana">Mañana, un texto nuevo.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Botón de confirmar: app.js lo coloca dentro de la carta, justo debajo de la palabra seleccionada. -->
+  <span class="burbuja" id="burbuja" hidden>
+    <button type="button" class="boton boton--principal boton--marcar" id="btn-marcar">Marcar gazapo</button>
+  </span>
+
+  <dialog class="modal" id="instrucciones" aria-labelledby="instrucciones-titulo">
+    <div class="modal__hoja">
+      <button type="button" class="modal__cerrar" id="btn-cerrar" aria-label="Cerrar">×</button>
+      <h2 class="modal__titulo" id="instrucciones-titulo">Cómo se juega</h2>
+      <p>Cada día, un texto de otra época. Se le han colado tres palabras que entonces nadie podía haber escrito. Toca una palabra para seleccionarla y pulsa «Marcar gazapo» para confirmarla.</p>
+      <h3>Borrones</h3>
+      <p>Cada palabra que no sea un gazapo es un borrón. Con tres borrones se acaba la partida.</p>
+      <h3>Ojo con las trampas</h3>
+      <p>Algunas palabras suenan modernas o exóticas pero ya se decían entonces, como <em>canoa</em>, que ya aparece en el diario de Colón.</p>
+      <h3>Las marcas</h3>
+      <ul class="leyenda">
+        <li><span class="palabra palabra--gazapo palabra--quieta">gazapo</span> rodeada en rojo: gazapo cazado.</li>
+        <li><span class="palabra palabra--trampa">trampa</span> subrayado ondulado: trampa.</li>
+        <li><span class="palabra palabra--fallo">fallo</span> tachada: fallo.</li>
+      </ul>
+      <p class="modal__manana">Mañana, un texto nuevo.</p>
+    </div>
+  </dialog>
+
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>
