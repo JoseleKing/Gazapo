@@ -931,25 +931,149 @@
     };
   }
 
-  // Coloca cada etiqueta en la fila más baja en la que no pise a otra.
+  // Coloca las etiquetas en el menor número de filas sin que se pisen ni las atraviese
+  // la guía de otra: cada guía sube en vertical desde su punto y cruza las filas de
+  // debajo, así que esas filas no pueden ocupar su x. Si hace falta, la etiqueta se
+  // aparta de su punto (como mucho, APARTE píxeles) y su guía se acoda.
   // reservado: tramos de la primera fila que no se pueden ocupar (la raya de la carta).
+  var SEPARACION = 6; // entre etiquetas de una misma fila
+  var HOLGURA_GUIA = 5; // entre una guía y una etiqueta ajena
+  var APARTE = 24;
+
   function escalonar(etiquetas, ancho, reservado) {
-    var filas = [reservado || []];
-    etiquetas.forEach(function (e) {
-      e.centro = Math.min(Math.max(e.x, e.ancho / 2 + 2), ancho - e.ancho / 2 - 2);
-      var izq = e.centro - e.ancho / 2;
-      var der = e.centro + e.ancho / 2;
-      for (var n = 0; ; n++) {
-        filas[n] = filas[n] || [];
-        var libre = filas[n].every(function (o) { return der + 6 <= o.izq || izq >= o.der + 6; });
-        if (libre) {
-          filas[n].push({ izq: izq, der: der });
-          e.nivel = n;
+    var colocadas = [];
+    var pasos = 0;
+
+    function bordes(e, centro) {
+      return { izq: centro - e.ancho / 2, der: centro + e.ancho / 2 };
+    }
+
+    // Dónde llega la guía a la etiqueta, y el tramo que recorre acodada (o null).
+    function llegada(e, centro) {
+      var b = bordes(e, centro);
+      return Math.min(Math.max(e.x, b.izq + 3), b.der - 3);
+    }
+
+    function tramoCodo(e, centro) {
+      var l = llegada(e, centro);
+      if (Math.abs(l - e.x) <= 0.5) return null;
+      return l < e.x ? { izq: l - 2, der: e.x } : { izq: e.x, der: l + 2 };
+    }
+
+    // Una guía que sale del mismo punto comparte la recta: esa no cuenta.
+    function dentro(x, tramo, origen) {
+      return !!tramo && x > tramo.izq && x < tramo.der && Math.abs(x - origen) > 0.5;
+    }
+
+    // ¿Pasa la guía de e, a la altura de la fila nivel, lejos de las etiquetas de debajo?
+    // (Y sin cortar el codo de ninguna guía de debajo.)
+    function guiaLibre(e, nivel) {
+      return colocadas.every(function (o) {
+        if (o.nivel >= nivel) return true;
+        var b = bordes(o, o.centro);
+        return (e.x <= b.izq - HOLGURA_GUIA + 0.01 || e.x >= b.der + HOLGURA_GUIA - 0.01) && !dentro(e.x, tramoCodo(o, o.centro), o.x);
+      });
+    }
+
+    function obstaculos(nivel) {
+      var lista = nivel === 0 ? (reservado || []).map(function (r) {
+        return { izq: r.izq - SEPARACION, der: r.der + SEPARACION };
+      }) : [];
+      colocadas.forEach(function (o) {
+        if (o.nivel === nivel) {
+          var b = bordes(o, o.centro);
+          lista.push({ izq: b.izq - SEPARACION, der: b.der + SEPARACION });
+        } else if (o.nivel > nivel) {
+          lista.push({ izq: o.x - HOLGURA_GUIA, der: o.x + HOLGURA_GUIA });
+        }
+      });
+      return lista;
+    }
+
+    // En la primera fila no hay sitio para acodar la guía: la etiqueta, sobre su punto.
+    function cabe(e, nivel, centro, lista) {
+      var b = bordes(e, centro);
+      if (e.ancho <= ancho - 4 && (b.izq < 1.99 || b.der > ancho - 1.99)) return false;
+      if (Math.max(b.izq + 3 - e.x, e.x - (b.der - 3), 0) > (nivel === 0 ? 0 : APARTE)) return false;
+      if (!lista.every(function (o) { return b.der <= o.izq + 0.01 || b.izq >= o.der - 0.01; })) return false;
+      // Que su codo no corte otra guía: ni las que suben más arriba ni las de su fila.
+      var tramo = tramoCodo(e, centro);
+      var l = llegada(e, centro);
+      return colocadas.every(function (o) {
+        if (o.nivel > nivel) return !dentro(o.x, tramo, e.x);
+        if (o.nivel === nivel) return (e.x - o.x) * (l - llegada(o, o.centro)) >= 0;
+        return true;
+      });
+    }
+
+    // Los centros posibles en una fila: junto a su punto o pegados a un obstáculo,
+    // primero los que dejan el punto bajo la etiqueta y, de ellos, los más cercanos.
+    function centros(e, nivel) {
+      var ideal = e.ancho > ancho - 4 ? ancho / 2 : Math.min(Math.max(e.x, e.ancho / 2 + 2), ancho - e.ancho / 2 - 2);
+      var lista = obstaculos(nivel);
+      var opciones = [ideal, e.ancho / 2 + 2, ancho - e.ancho / 2 - 2];
+      lista.forEach(function (o) { opciones.push(o.izq - e.ancho / 2, o.der + e.ancho / 2); });
+      // Junto a la guía de cualquier otra, por si acaba más arriba, y, cada pocos
+      // píxeles, hacia los dos lados: deja hueco a las que aún faltan.
+      etiquetas.forEach(function (o) {
+        if (o !== e) opciones.push(o.x - HOLGURA_GUIA - e.ancho / 2, o.x + HOLGURA_GUIA + e.ancho / 2);
+      });
+      for (var d = 6; d <= e.ancho / 2 + APARTE; d += 6) opciones.push(ideal - d, ideal + d);
+      return opciones.filter(function (c, i) {
+        return opciones.indexOf(c) === i && cabe(e, nivel, c, lista);
+      }).map(function (c) {
+        var b = bordes(e, c);
+        var encima = e.x >= b.izq + 3 && e.x <= b.der - 3;
+        return { centro: c, coste: Math.abs(c - ideal) + (encima ? 0 : 1000) };
+      }).sort(function (a, b) { return a.coste - b.coste; });
+    }
+
+    function colocar(grupo, i, filas) {
+      if (i === grupo.length) return true;
+      if (++pasos > 2000) return false;
+      var e = grupo[i];
+      for (var nivel = 0; nivel < filas; nivel++) {
+        if (!guiaLibre(e, nivel)) continue;
+        var opciones = centros(e, nivel);
+        for (var k = 0; k < opciones.length; k++) {
+          e.nivel = nivel;
+          e.centro = opciones[k].centro;
+          colocadas.push(e);
+          if (colocar(grupo, i + 1, filas)) return true;
+          colocadas.pop();
+        }
+      }
+      return false;
+    }
+
+    // Las etiquetas lejanas no se estorban: cada grupo de cercanas se coloca por su
+    // cuenta (así un grupo difícil no hace repetir las combinaciones de los demás).
+    var grupos = [];
+    etiquetas.forEach(function (e, n) {
+      var previa = etiquetas[n - 1];
+      var cerca = previa && e.x - previa.x < e.ancho + previa.ancho + 2 * APARTE + 2 * SEPARACION;
+      if (cerca) grupos[grupos.length - 1].push(e);
+      else grupos.push([e]);
+    });
+
+    var total = 1;
+    grupos.forEach(function (grupo) {
+      for (var filas = 1; filas <= grupo.length + 1; filas++) {
+        pasos = 0;
+        colocadas = [];
+        if (colocar(grupo, 0, filas)) {
+          total = Math.max(total, filas);
           return;
         }
       }
+      // No debería pasar: cada etiqueta en su propia fila, sobre su punto.
+      grupo.forEach(function (e, n) {
+        e.nivel = n + 1;
+        e.centro = Math.min(Math.max(e.x, e.ancho / 2 + 2), ancho - e.ancho / 2 - 2);
+      });
+      total = Math.max(total, grupo.length + 1);
     });
-    return filas.length;
+    return total;
   }
 
   function textoSvg(x, y, texto, clase, anchor) {
@@ -1059,7 +1183,17 @@
       var lineaAlto = e.lineas.length === 3 ? 16 : 17;
       var arriba = abajo - (e.lineas.length - 1) * lineaAlto;
       if (e.nivel > 0 || Math.abs(e.centro - e.x) > 1) {
-        guias.appendChild(nodoSvg('line', { x1: e.x, y1: ejeY - 8, x2: e.x, y2: abajo + 4, class: 'linea__guia linea__aparece', style: retraso }));
+        // Si la etiqueta se ha apartado de su punto, la guía sube recta y se acoda al llegar.
+        var llegada = Math.min(Math.max(e.x, e.centro - e.ancho / 2 + 3), e.centro + e.ancho / 2 - 3);
+        var codo = Math.min(abajo + 7, ejeY - 8);
+        var puntos = [[e.x, ejeY - 8]];
+        if (Math.abs(llegada - e.x) > 0.5 && codo > abajo + 4 && codo < ejeY - 8.5) puntos.push([e.x, codo]);
+        puntos.push([llegada, abajo + 4]);
+        guias.appendChild(nodoSvg('polyline', {
+          points: puntos.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '),
+          class: 'linea__guia linea__aparece',
+          style: retraso,
+        }));
       }
       g.appendChild(nodoSvg('circle', { cx: e.x, cy: ejeY, r: 16, class: 'linea__toque' }));
       var clase = e.tipo === 'trampa' ? 'linea__trampa' : (e.cazado ? 'linea__gazapo' : 'linea__gazapo linea__gazapo--escapado');

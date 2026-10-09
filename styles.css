@@ -799,7 +799,9 @@ button.palabra[aria-disabled="true"] {
 }
 
 .linea__guia {
+  fill: none;
   stroke: var(--regla-suave);
+  stroke-linejoin: round;
 }
 
 .linea__punto {
@@ -962,13 +964,21 @@ button.palabra[aria-disabled="true"] {
   gap: 0 0.4rem;
 }
 
-/* La palabra con la marca de la carta (como en la leyenda de las instrucciones). */
+/* La palabra con la marca de la carta (como en la leyenda de las instrucciones). Va más
+   grande, y la elipse se cerraría sobre las astas de la primera y la última letra: el
+   círculo sobresale más, y la palabra con círculo reserva ese hueco. */
 .solucion .palabra {
+  --circulo-sobresale: 0.4em;
   display: inline-block;
   margin: 0 0.3em;
   font-size: 1.2rem;
   line-height: 1.8;
   cursor: default;
+}
+
+.solucion .palabra--gazapo,
+.solucion .palabra--revelada {
+  margin-inline: 0.45em;
 }
 
 .solucion__detalle {
@@ -1071,6 +1081,12 @@ button.palabra[aria-disabled="true"] {
   cursor: default;
   margin-right: 0.35em;
   margin-left: 0.3em;
+}
+
+/* La muestra del círculo, con aire a los lados para que no roce la primera ni la última letra. */
+.leyenda .palabra--gazapo {
+  --circulo-sobresale: 0.5em;
+  margin-inline: 0.55em 0.6em;
 }
 
 /* --- Movimiento reducido ------------------------------------------------- */
