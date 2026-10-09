@@ -2,9 +2,9 @@
   <title>Gazapo</title>
   <style>
     /* Las orejas se mueven un poco, cada una sobre su base. */
-    .oreja { transform-box: view-box; animation: menear 1.1s ease-in-out 0.2s both; }
+    .oreja { transform-box: view-box; animation: menear 1.1s ease-in-out 0.1s both; }
     .oreja--izq { transform-origin: 53px 44.5px; }
-    .oreja--der { transform-origin: 61.5px 42.8px; animation-name: menear-der; animation-delay: 0.3s; }
+    .oreja--der { transform-origin: 61.5px 42.8px; animation-name: menear-der; animation-delay: 0.2s; }
     @keyframes menear {
       0%, 60%, 100% { transform: rotate(0); }
       15% { transform: rotate(-11deg); }

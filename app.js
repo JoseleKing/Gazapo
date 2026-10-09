@@ -1346,13 +1346,16 @@
       return;
     }
     var ahora = window.performance && performance.now ? performance.now() : 0;
+    // Si tarda en pintarse (la primera visita), se queda al menos 1,4 s desde entonces.
+    var pintado = window.performance && performance.getEntriesByName ? performance.getEntriesByName('first-contentful-paint')[0] : null;
+    var desdePintado = pintado ? ahora - pintado.startTime : 0;
     setTimeout(function () {
       portada.classList.add('oculta');
       setTimeout(function () {
         portada.remove();
         despues();
       }, 500);
-    }, Math.max(0, 1500 - ahora));
+    }, Math.max(0, 1500 - ahora, 1400 - desdePintado));
   }
 
   function empezar() {
