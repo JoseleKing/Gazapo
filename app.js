@@ -633,8 +633,14 @@
     var centro = palabra.left + palabra.width / 2 - hoja.left;
     var izquierda = Math.min(Math.max(centro - ancho / 2, margen), hoja.width - ancho - margen);
     var alto = parseFloat(getComputedStyle(seleccionBoton).fontSize) || 20;
-    burbuja.style.left = izquierda + 'px';
-    burbuja.style.top = (palabra.bottom - hoja.top - 0.15 * alto + 10) + 'px';
+    // Se coloca respecto a su contenedor posicionado, que no siempre es la hoja: el párrafo
+    // señalado por la lupa también lo es (position: relative, por la manecilla).
+    var contenedor = burbuja.offsetParent || $('carta');
+    var caja = contenedor.getBoundingClientRect();
+    var dx = hoja.left - caja.left - contenedor.clientLeft;
+    var dy = hoja.top - caja.top - contenedor.clientTop;
+    burbuja.style.left = (izquierda + dx) + 'px';
+    burbuja.style.top = (palabra.bottom - hoja.top - 0.15 * alto + 10 + dy) + 'px';
     burbuja.style.setProperty('--piquito', Math.min(Math.max(centro - izquierda, 16), ancho - 16) + 'px');
 
     // Que no quede fuera de la pantalla.
