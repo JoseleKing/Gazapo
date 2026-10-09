@@ -1351,8 +1351,8 @@
       setTimeout(function () {
         portada.remove();
         despues();
-      }, 400);
-    }, Math.max(0, 1200 - ahora));
+      }, 500);
+    }, Math.max(0, 1500 - ahora));
   }
 
   function empezar() {
