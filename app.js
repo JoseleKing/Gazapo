@@ -1339,13 +1339,8 @@
 
   // La portada con el logo se ve al menos un instante (lo que tardan las orejas en moverse)
   // y luego se desvanece. Después, si toca, se abren las instrucciones.
-  // Si ya se vio en esta sesión, index.html la oculta antes de pintarla: se quita sin esperar.
   function retirarPortada(despues) {
     var portada = $('portada');
-    if (portada && document.documentElement.classList.contains('sin-portada')) {
-      portada.remove();
-      portada = null;
-    }
     if (!portada) {
       despues();
       return;
