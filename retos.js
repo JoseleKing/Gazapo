@@ -50,7 +50,7 @@ window.GAZAPO_RETOS = [
       'huracán': { termino: 'huracán', desde: 1510, aprox: true, explicacion: 'Parece moderna, pero es una palabra taína que los cronistas de Indias ya usan a comienzos del siglo XVI.' },
       'cacao': { termino: 'cacao', desde: 1520, aprox: true, explicacion: 'Del náhuatl. Ya aparece en las crónicas de Indias en la primera mitad del siglo XVI.' },
       'tabaco': { termino: 'tabaco', desde: 1535, explicacion: 'Fernández de Oviedo ya lo describe en 1535. En la Sevilla de 1590 su consumo iba en aumento.' },
-      'hamacas': { termino: 'hamaca', desde: 1510, aprox: true, explicacion: 'Palabra taína que entra en el español con las primeras crónicas de Indias, a comienzos del siglo XVI.' },
+      'hamacas': { termino: 'hamaca', desde: 1492, explicacion: 'Palabra taína. Ya está en el diario de Colón, en 1492, que cuenta que los indios dormían en unas redes que llamaban hamacas.' },
       'canoas': { termino: 'canoa', desde: 1492, explicacion: 'Se tiene por la primera palabra americana del español: ya está en el diario de Colón, en 1492.' },
       'tomates': { termino: 'tomate', desde: 1532, explicacion: 'Del náhuatl tomatl. Se documenta en español hacia 1532.' },
       'millones': { termino: 'millones', desde: 1590, explicacion: 'Suena a cifra moderna, pero el «servicio de millones» fue un impuesto real que las Cortes aprobaron precisamente en 1590.' },
@@ -131,7 +131,7 @@ window.GAZAPO_RETOS = [
       },
     },
     trampas: {
-      'electricidad': { termino: 'electricidad', desde: 1750, aprox: true, explicacion: 'La palabra es del siglo XVIII. Y la Exposición de 1888 se iluminó, en efecto, con luz eléctrica.' },
+      'electricidad': { termino: 'electricidad', desde: 1646, explicacion: 'La palabra nace en el siglo XVII, y en el XVIII ya corría por toda Europa. Y la Exposición de 1888 se iluminó, en efecto, con luz eléctrica.' },
       'tranvía': { termino: 'tranvía', desde: 1872, explicacion: 'En 1812 era un gazapo; en 1888, no. Barcelona tenía tranvía de caballos desde 1872.' },
       'fotografías': { termino: 'fotografía', desde: 1839, explicacion: 'La palabra corre desde 1839, y en 1888 los estudios de fotografía abundaban en Barcelona.' },
       'teléfono': { termino: 'teléfono', desde: 1876, explicacion: 'En Barcelona se hicieron pruebas con el teléfono de Bell ya en 1877, un año después de su patente.' },
@@ -720,7 +720,7 @@ window.GAZAPO_RETOS = [
       },
     },
     trampas: {
-      'naranjito': { termino: 'Naranjito', desde: 1980, explicacion: 'Fue la mascota del Mundial de 1982.' },
+      'naranjito': { termino: 'Naranjito', desde: 1979, explicacion: 'Se presentó en 1979 como mascota del Mundial de 1982.' },
       'telediario': { termino: 'telediario', desde: 1957, explicacion: 'Televisión Española lo emite desde 1957.' },
       'walkman': { termino: 'walkman', desde: 1979, explicacion: 'Sony lo lanzó en 1979, y en 1982 ya era el sueño de cualquier adolescente.' },
       'pesetas': { termino: 'peseta', desde: 1868, explicacion: 'Fue la moneda de España de 1868 a 2002.' },
@@ -1112,7 +1112,7 @@ window.GAZAPO_RETOS = [
     trampas: {
       'metro': { termino: 'metro', desde: 1919, explicacion: 'En 1873 era un gazapo; en 1931, no: Madrid tenía metro desde 1919.' },
       'rascacielos': { termino: 'rascacielos', desde: 1929, explicacion: 'El edificio de la Telefónica, en la Gran Vía, se terminó en 1929 y era el más alto de Madrid.' },
-      'tricolores': { termino: 'tricolor', desde: 1873, explicacion: 'La bandera roja, amarilla y morada ya la enarbolaban los republicanos antes de 1931.' },
+      'tricolores': { termino: 'tricolor', desde: 1870, aprox: true, explicacion: 'La bandera roja, amarilla y morada ya la enarbolaban los republicanos antes de 1931.' },
     },
   },
 
@@ -1863,7 +1863,7 @@ window.GAZAPO_RETOS = [
     },
     trampas: {
       'caciques': { termino: 'cacique', desde: 1492, explicacion: 'Palabra taína que los españoles usan desde los primeros años.' },
-      'perlas': { termino: 'perla', desde: 1513, explicacion: 'Balboa volvió con muchas perlas del golfo de San Miguel.' },
+      'perlas': { termino: 'perla', desde: 1250, aprox: true, explicacion: 'La palabra es medieval, y Balboa volvió con muchas perlas del golfo de San Miguel.' },
       'canoas': { termino: 'canoa', desde: 1492, explicacion: 'Ya está en el diario de Colón, en 1492.' },
     },
   },
@@ -2090,7 +2090,7 @@ window.GAZAPO_RETOS = [
       'avión': {
         termino: 'avión',
         desde: 1890,
-        explicacion: 'El primer vuelo a motor es de 1903, y los aviones de pasajeros, posteriores.',
+        explicacion: 'La palabra la inventa Clément Ader para su aparato de 1890; el primer vuelo a motor es de 1903, y los aviones de pasajeros, posteriores.',
         epoca: 'En 1869 se viajaba en vapor o en ferrocarril.',
       },
       'cine': {
@@ -2262,7 +2262,7 @@ window.GAZAPO_RETOS = [
     },
     trampas: {
       'vivero': { termino: 'palacio de los Vivero', desde: 1469, explicacion: 'La boda se celebró allí el 19 de octubre de 1469.' },
-      'dispensa': { termino: 'dispensa', desde: 1469, explicacion: 'Como eran primos, necesitaban la dispensa del Papa, y la que presentaron se tiene por falsificada.' },
+      'dispensa': { termino: 'dispensa', desde: 1250, aprox: true, explicacion: 'La palabra es medieval. Como eran primos, necesitaban la dispensa del Papa, y la que presentaron se tiene por falsificada.' },
       'vihuelas': { termino: 'vihuela', desde: 1450, aprox: true, explicacion: 'El instrumento de cuerda era muy popular en el siglo XV.' },
       'mulas': { termino: 'mozo de mulas', desde: 1100, aprox: true, explicacion: 'Fernando atravesó Castilla disfrazado para que no lo detuvieran.' },
     },
@@ -2342,8 +2342,8 @@ window.GAZAPO_RETOS = [
     },
     trampas: {
       'franklin': { termino: 'Franklin', desde: 1752, explicacion: 'Su experimento de la cometa se fecha en junio de 1752.' },
-      'cometa': { termino: 'cometa', desde: 1600, aprox: true, explicacion: 'La cometa de juguete era conocida desde hacía siglos.' },
-      'electricidad': { termino: 'electricidad', desde: 1646, explicacion: 'La palabra existía desde el siglo XVII.' },
+      'cometa': { termino: 'cometa', desde: 1729, explicacion: 'El juguete ya estaba en el Diccionario de Autoridades de 1729: papel engrudado, unos alambres y un cordel largo, para que se remonte con el viento.' },
+      'electricidad': { termino: 'electricidad', desde: 1646, explicacion: 'La palabra nace en el siglo XVII, y en 1752 todos los sabios de Europa hablaban de ella.' },
       'leiden': { termino: 'botella de Leiden', desde: 1745, explicacion: 'Se inventó en 1745.' },
     },
   },
@@ -2464,7 +2464,7 @@ window.GAZAPO_RETOS = [
       'mamelucos': { termino: 'mameluco', desde: 1250, aprox: true, explicacion: 'Napoleón traía un escuadrón de mamelucos, jinetes egipcios.' },
       'murat': { termino: 'Murat', desde: 1808, explicacion: 'Joaquín Murat mandaba las tropas francesas en Madrid.' },
       'daoíz': { termino: 'Daoíz', desde: 1808, explicacion: 'Luis Daoíz murió defendiendo el parque de Monteleón el 2 de mayo de 1808.' },
-      'monteleón': { termino: 'Monteleón', desde: 1808, explicacion: 'El parque de artillería donde resistieron Daoíz y Velarde.' },
+      'monteleón': { termino: 'Monteleón', desde: 1690, aprox: true, explicacion: 'Era el palacio de los duques de Monteleón, de finales del siglo XVII, convertido en parque de artillería. Allí resistieron Daoíz y Velarde.' },
     },
   },
 
