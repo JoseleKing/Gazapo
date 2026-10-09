@@ -58,11 +58,11 @@
       /* Por si app.js no llega a retirarla. */
       animation: retirar 0.4s 5s forwards;
     }
-    #portada img { width: 7.5rem; height: 7.5rem; border-radius: 22%; box-shadow: 0 0 0 1px #cdb994; animation: asomar 0.5s ease-out; }
+    #portada img { width: 7.5rem; height: 7.5rem; border-radius: 22%; box-shadow: 0 0 0 1px #cdb994, 0 2px 4px rgba(70, 45, 15, 0.3), 0 16px 44px -6px rgba(70, 45, 15, 0.4); animation: asomar 0.5s ease-out; }
     #portada p { margin: 0; font: 2.6rem/1 "IM Fell DW Pica", "IM Fell English", Georgia, serif; animation: asomar 0.5s ease-out; }
     #portada.oculta { opacity: 0; visibility: hidden; }
     [data-theme="dark"] #portada { background: #1c1813; color: #eadfc8; }
-    [data-theme="dark"] #portada img { box-shadow: 0 0 0 1px #4a3f31; }
+    [data-theme="dark"] #portada img { box-shadow: 0 0 0 1px #4a3f31, 0 2px 4px rgba(0, 0, 0, 0.65), 0 16px 44px -6px rgba(0, 0, 0, 0.8); }
     @keyframes asomar { from { opacity: 0; transform: scale(0.9); } }
     @keyframes retirar { to { opacity: 0; visibility: hidden; } }
     @media (prefers-reduced-motion: reduce) { #portada img, #portada p { animation: none; } }

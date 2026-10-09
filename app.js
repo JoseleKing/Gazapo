@@ -1352,7 +1352,7 @@
         portada.remove();
         despues();
       }, 400);
-    }, Math.max(0, 1500 - ahora));
+    }, Math.max(0, 1200 - ahora));
   }
 
   function empezar() {
