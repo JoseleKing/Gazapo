@@ -14,11 +14,16 @@
   --sombra: rgba(70, 45, 15, 0.22);
   --acento: #a8321e;
   --acento-tenue: rgba(168, 50, 30, 0.1);
+  --lupa-fondo: rgba(168, 50, 30, 0.05);
+  --lupa-frase: #eed7c6; /* opaco: el acento sobre el fondo del párrafo señalado */
 
   --fuente-titulo: "IM Fell DW Pica", "IM Fell English", Georgia, "Times New Roman", serif;
   --fuente-versalitas: "IM Fell DW Pica SC", "IM Fell DW Pica", Georgia, serif;
   --fuente-texto: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
 
+  /* Círculo de las palabras: lo que sobresale por cada lado y el hueco que reserva. */
+  --circulo-sobresale: 0.2em;
+  --circulo-hueco: 0.25em;
 
   color-scheme: light;
 }
@@ -34,6 +39,8 @@
   --sombra: rgba(0, 0, 0, 0.55);
   --acento: #e0715a;
   --acento-tenue: rgba(224, 113, 90, 0.14);
+  --lupa-fondo: rgba(224, 113, 90, 0.07);
+  --lupa-frase: #4c3127;
   color-scheme: dark;
 }
 
@@ -74,6 +81,19 @@ button {
 :focus-visible {
   outline: 2px solid var(--acento);
   outline-offset: 2px;
+}
+
+/* Solo para lectores de pantalla. */
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .pagina {
@@ -151,7 +171,8 @@ button {
 .marcador {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  align-items: flex-start;
+  gap: 1.75rem;
   margin: 0 0 1rem;
 }
 
@@ -206,6 +227,185 @@ button {
 
 .marca--nueva {
   animation: sello 0.45s ease-out;
+}
+
+/* --- La lupa ------------------------------------------------------------- */
+
+.marcador__grupo--lupa {
+  position: relative;
+}
+
+.boton-lupa {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-top: -0.25rem;
+  padding: 0;
+  border: 1px solid var(--regla);
+  border-radius: 50%;
+  background: var(--hoja);
+  color: var(--tinta);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Zona de toque de 44 px sin agrandar el botón. */
+.boton-lupa::before {
+  content: "";
+  position: absolute;
+  inset: -0.375rem;
+}
+
+.boton-lupa svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Cuántas lupas quedan, en una pastilla sobre el botón. */
+.boton-lupa__quedan {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.5rem;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  padding: 0 0.2rem;
+  border-radius: 0.55rem;
+  background: var(--acento);
+  color: var(--hoja);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.05rem;
+  text-align: center;
+}
+
+.boton-lupa:disabled .boton-lupa__quedan {
+  background: var(--regla-suave);
+  color: var(--tinta-suave);
+}
+
+.boton-lupa:hover:not(:disabled) {
+  border-color: var(--tinta);
+}
+
+.boton-lupa:disabled {
+  border-style: dashed;
+  border-color: var(--regla-suave);
+  color: var(--regla);
+  cursor: default;
+}
+
+.boton-lupa[aria-expanded="true"] {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+/* Burbuja de confirmación, bajo el botón. */
+.confirmar-lupa {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: -0.75rem;
+  z-index: 4;
+  width: max-content;
+  max-width: min(17rem, calc(100vw - 2rem));
+  padding: 0.7rem 0.8rem 0.8rem;
+  background: var(--hoja);
+  border: 1px solid var(--regla);
+  border-radius: 0.4rem;
+  box-shadow: 0 6px 18px -6px var(--sombra);
+  font-size: 1rem;
+  line-height: 1.3;
+  animation: asomar 0.18s ease-out;
+}
+
+.confirmar-lupa[hidden] {
+  display: none;
+}
+
+/* Piquito que señala la lupa. */
+.confirmar-lupa::before {
+  content: "";
+  position: absolute;
+  top: -0.42rem;
+  right: 1.5rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  background: var(--hoja);
+  border-left: 1px solid var(--regla);
+  border-top: 1px solid var(--regla);
+  transform: rotate(45deg);
+}
+
+.confirmar-lupa p {
+  margin: 0 0 0.6rem;
+}
+
+.confirmar-lupa__botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.confirmar-lupa .boton {
+  min-height: 2.75rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 1rem;
+}
+
+/* Párrafo señalado: manecilla roja en el margen y un fondo muy suave. */
+.parrafo--lupa {
+  position: relative;
+  background: var(--lupa-fondo);
+  box-shadow: 0 0 0 0.3rem var(--lupa-fondo);
+}
+
+.parrafo--lupa::before {
+  content: "☞";
+  position: absolute;
+  top: 0.7rem;
+  left: -0.95rem;
+  font-family: "Apple Symbols", "Segoe UI Symbol", "DejaVu Sans", serif;
+  font-variant-emoji: text;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-indent: 0;
+  color: var(--acento);
+}
+
+@media (min-width: 30rem) {
+  .parrafo--lupa::before {
+    left: -1.6rem;
+    font-size: 1.15rem;
+  }
+}
+
+/* En los párrafos con sangría, la manecilla cabe en el hueco de la sangría. */
+.carta__parrafo.parrafo--lupa::before {
+  top: 0.32em;
+  left: 0.1em;
+  font-size: 1em;
+}
+
+.parrafo--lupa:focus {
+  outline: none;
+}
+
+/* Segunda lupa: la frase del gazapo, con un fondo algo más marcado (también entre trozos;
+   opaco, para que no salgan costuras donde se solapan). */
+.trozo--lupa {
+  background: var(--lupa-frase);
+  box-shadow: 0 0 0 0.14em var(--lupa-frase);
+}
+
+/* Tercera lupa: la palabra, subrayada con puntos rojos. */
+.palabra--lupa {
+  text-decoration: underline dotted var(--acento);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
 }
 
 /* --- La carta ------------------------------------------------------------ */
@@ -307,7 +507,15 @@ button.palabra[aria-disabled="true"] {
 }
 
 
-/* Círculo a mano alzada, común a selección, gazapo y revelado. */
+/* Círculo a mano alzada, común a selección, gazapo y revelado.
+   Sobresale de la palabra por los lados; la palabra con círculo reserva ese hueco
+   con su margen, para que el trazo no pise la vecina ni la puntuación pegada. */
+.palabra--seleccionada,
+.palabra--gazapo,
+.palabra--revelada {
+  margin-inline: var(--circulo-hueco);
+}
+
 .palabra--seleccionada::after,
 .palabra--gazapo::after,
 .palabra--revelada::after {
@@ -315,8 +523,8 @@ button.palabra[aria-disabled="true"] {
   position: absolute;
   top: 0.32em;
   bottom: 0.28em;
-  left: -0.2em;
-  right: -0.2em;
+  left: calc(-1 * var(--circulo-sobresale));
+  right: calc(-1 * var(--circulo-sobresale));
   border: 2px dashed var(--acento);
   border-radius: 50% 46% 54% 48% / 56% 50% 48% 52%;
   pointer-events: none;
@@ -387,6 +595,10 @@ button.palabra[aria-disabled="true"] {
 
 .nota--trampa {
   border-left-color: var(--regla-suave);
+}
+
+.nota--lupa {
+  border-left-color: var(--acento);
 }
 
 .nota__etiqueta {
@@ -537,6 +749,132 @@ button.palabra[aria-disabled="true"] {
   color: var(--tinta-suave);
 }
 
+/* Línea del tiempo: el año de la carta y el de cada gazapo y trampa. */
+.linea {
+  margin: 0 0 1.25rem;
+  text-align: left;
+}
+
+.linea[hidden] {
+  display: none;
+}
+
+.linea__svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--fuente-texto);
+}
+
+.linea__eje {
+  stroke: var(--regla);
+  stroke-width: 1.5;
+}
+
+.linea__barra {
+  stroke: var(--regla);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.linea__marca {
+  stroke: var(--regla);
+}
+
+.linea__raya {
+  stroke: var(--tinta);
+  stroke-width: 1.5;
+}
+
+.linea__sello {
+  fill: var(--tinta);
+}
+
+.linea__sello-dentro {
+  fill: none;
+  stroke: var(--hoja);
+  stroke-width: 1.2;
+  stroke-dasharray: 2 1.5;
+}
+
+.linea__guia {
+  stroke: var(--regla-suave);
+}
+
+.linea__punto {
+  cursor: pointer;
+}
+
+.linea__toque {
+  fill: transparent;
+}
+
+.linea__gazapo {
+  fill: var(--acento);
+}
+
+.linea__gazapo--escapado {
+  fill: var(--hoja);
+  stroke: var(--acento);
+  stroke-width: 2;
+  stroke-dasharray: 3 2.5;
+}
+
+.linea__trampa {
+  fill: var(--tinta-suave);
+}
+
+/* Halo del color de la hoja: las guías que cruzan pasan por detrás de las letras. */
+.linea__svg text {
+  paint-order: stroke;
+  stroke: var(--hoja);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.linea__texto-palabra,
+.linea__texto-carta {
+  font-size: 15px;
+  font-weight: 500;
+  fill: var(--tinta);
+}
+
+.linea__punto--gazapo .linea__texto-palabra {
+  fill: var(--acento);
+}
+
+.linea__texto-anio {
+  font-size: 14px;
+  fill: var(--tinta);
+}
+
+.linea__punto--trampa .linea__texto-palabra,
+.linea__punto--trampa .linea__texto-anio {
+  fill: var(--tinta-suave);
+}
+
+.linea__texto-distancia {
+  font-size: 13px;
+  font-style: italic;
+  fill: var(--tinta-suave);
+}
+
+.linea__texto-marca {
+  font-size: 14px;
+  fill: var(--tinta-suave);
+}
+
+/* Al aparecer, los puntos llegan uno tras otro. */
+.linea--animada .linea__aparece {
+  animation: aparecer-punto 0.45s ease-out both;
+}
+
+@keyframes aparecer-punto {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
 .final__compartir {
   display: inline-block;
   margin: 0 0 1rem;
@@ -570,6 +908,88 @@ button.palabra[aria-disabled="true"] {
   margin: 0.25rem 0 0;
   font-family: var(--fuente-versalitas);
   color: var(--tinta-suave);
+}
+
+/* --- Carta corregida (diálogo al terminar) ------------------------------- */
+
+.modal--final {
+  width: min(34rem, calc(100vw - 1.5rem));
+  max-height: calc(100dvh - 1.5rem);
+}
+
+.modal--final .modal__hoja {
+  padding-bottom: 1rem;
+}
+
+.modal--final .final__titulo {
+  margin-bottom: 0.4rem;
+}
+
+.modal--final .final__resumen {
+  margin: 0 0 0.25rem;
+}
+
+.modal--final .final__compartir {
+  display: block;
+  margin: 0.25rem 0 0.9rem;
+}
+
+.modal--final .final__botones {
+  justify-content: flex-start;
+}
+
+/* Las soluciones: cada gazapo con su marca, su año y su explicación. */
+.soluciones {
+  margin: 0.15rem 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.solucion {
+  padding: 0.45rem 0 0.55rem;
+  border-top: 1px solid var(--regla-suave);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.solucion:first-child {
+  border-top: 0;
+}
+
+.solucion__cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.4rem;
+}
+
+/* La palabra con la marca de la carta (como en la leyenda de las instrucciones). */
+.solucion .palabra {
+  display: inline-block;
+  margin: 0 0.3em;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  cursor: default;
+}
+
+.solucion__detalle {
+  font-size: 0.95rem;
+  color: var(--tinta-suave);
+}
+
+.modal .solucion__explicacion {
+  margin: 0 0 0.2rem;
+}
+
+.modal .solucion__epoca {
+  margin: 0;
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+/* Al tocar su punto en la línea del tiempo. */
+.solucion--resaltada {
+  background: var(--acento-tenue);
+  box-shadow: 0 0 0 0.4rem var(--acento-tenue);
 }
 
 /* --- Instrucciones ------------------------------------------------------- */
@@ -643,7 +1063,11 @@ button.palabra[aria-disabled="true"] {
   margin: 0.35rem 0;
 }
 
+/* Las muestras son spans: con la caja de los botones de la carta, el círculo
+   queda igual que allí y no corta la palabra. */
 .leyenda .palabra {
+  display: inline-block;
+  line-height: 1.8;
   cursor: default;
   margin-right: 0.35em;
   margin-left: 0.3em;

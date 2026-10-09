@@ -25,6 +25,12 @@
         document.querySelector('meta[name="theme-color"]').content = '#1c1813';
       }
     } catch (e) {}
+    // La portada con el logo, solo la primera vez en cada sesión del navegador.
+    // Sin sessionStorage, sale siempre.
+    try {
+      if (sessionStorage.getItem('gazapo:portada-vista')) document.documentElement.classList.add('sin-portada');
+      else sessionStorage.setItem('gazapo:portada-vista', '1');
+    } catch (e) {}
   </script>
 
   <link rel="manifest" href="manifest.json">
@@ -58,6 +64,7 @@
     #portada img { width: 7.5rem; height: 7.5rem; border-radius: 22%; box-shadow: 0 0 0 1px #cdb994; animation: asomar 0.5s ease-out; }
     #portada p { margin: 0; font: 2.6rem/1 "IM Fell DW Pica", "IM Fell English", Georgia, serif; animation: asomar 0.5s ease-out; }
     #portada.oculta { opacity: 0; visibility: hidden; }
+    .sin-portada #portada { display: none; }
     [data-theme="dark"] #portada { background: #1c1813; color: #eadfc8; }
     [data-theme="dark"] #portada img { box-shadow: 0 0 0 1px #4a3f31; }
     @keyframes asomar { from { opacity: 0; transform: scale(0.9); } }
@@ -80,7 +87,7 @@
     <main id="juego" class="juego">
       <p id="fecha-reto" class="fecha-reto"></p>
 
-      <!-- Marcador: tres círculos para los gazapos y tres gotas para los borrones. -->
+      <!-- Marcador: tres círculos para los gazapos, tres gotas para los borrones y la lupa. -->
       <div class="marcador" id="marcador">
         <div class="marcador__grupo">
           <span class="marcador__etiqueta">Gazapos</span>
@@ -89,6 +96,22 @@
         <div class="marcador__grupo">
           <span class="marcador__etiqueta">Borrones</span>
           <span class="marcador__marcas" id="marcas-borrones"></span>
+        </div>
+        <div class="marcador__grupo marcador__grupo--lupa">
+          <span class="marcador__etiqueta" aria-hidden="true">Lupas</span>
+          <button type="button" class="boton-lupa" id="btn-lupa" aria-expanded="false" aria-controls="confirmar-lupa"
+            aria-label="Usar una lupa: señala el párrafo de un gazapo (cuesta medio borrón; quedan 3 lupas)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/></svg>
+            <span class="boton-lupa__quedan" id="lupas-quedan" aria-hidden="true">3</span>
+          </button>
+          <!-- Confirmación antes de gastar la lupa. -->
+          <div class="confirmar-lupa" id="confirmar-lupa" role="group" aria-labelledby="confirmar-lupa-texto" hidden>
+            <p id="confirmar-lupa-texto">¿Usar una lupa? Señalará el párrafo de un gazapo y cuesta medio borrón. Te quedan 3.</p>
+            <div class="confirmar-lupa__botones">
+              <button type="button" class="boton boton--principal" id="btn-usar-lupa">Usar</button>
+              <button type="button" class="boton boton--secundario" id="btn-cancelar-lupa">Cancelar</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -99,15 +122,14 @@
         <div id="nota-cuerpo"></div>
       </aside>
 
-      <section class="final" id="final" hidden aria-labelledby="final-titulo">
-        <h2 class="final__titulo" id="final-titulo" tabindex="-1"></h2>
-        <p class="final__resumen" id="final-resumen"></p>
-        <pre class="final__compartir" id="compartir-texto"></pre>
+      <!-- Bajo la carta, al terminar: para volver a abrir la carta corregida. -->
+      <section class="final" id="final" hidden aria-labelledby="final-pagina-titulo">
+        <h2 class="final__titulo" id="final-pagina-titulo"></h2>
+        <p class="final__resumen">Toca un gazapo o una trampa de la carta para releer su nota.</p>
         <div class="final__botones">
-          <button type="button" class="boton boton--principal" id="btn-compartir">Compartir</button>
+          <button type="button" class="boton boton--principal" id="btn-ver-final" aria-haspopup="dialog">Ver la carta corregida</button>
           <a data-almanaque-volver hidden class="boton boton--secundario" href="https://joseleking.github.io/Almanaque/">Volver a Almanaque</a>
         </div>
-        <p class="final__aviso" id="aviso-copia" aria-live="polite"></p>
         <p class="final__manana">Mañana, un texto nuevo.</p>
       </section>
     </main>
@@ -118,6 +140,28 @@
     <button type="button" class="boton boton--principal boton--marcar" id="btn-marcar">Marcar gazapo</button>
   </span>
 
+  <!-- Carta corregida: se abre sola al terminar la partida, con las soluciones. -->
+  <dialog class="modal modal--final" id="final-dialogo" aria-labelledby="final-titulo">
+    <div class="modal__hoja">
+      <button type="button" class="modal__cerrar" id="btn-cerrar-final" aria-label="Cerrar y volver a la carta">×</button>
+      <h2 class="modal__titulo final__titulo" id="final-titulo" tabindex="-1"></h2>
+      <p class="final__resumen" id="final-resumen"></p>
+      <!-- Línea del tiempo: cuánto se pasaba cada gazapo. app.js dibuja el SVG. -->
+      <h3>Cuánto se pasaba cada gazapo</h3>
+      <div class="linea" id="linea-tiempo"></div>
+      <h3>Las soluciones</h3>
+      <ul class="soluciones" id="soluciones"></ul>
+      <pre class="final__compartir" id="compartir-texto"></pre>
+      <div class="final__botones">
+        <button type="button" class="boton boton--principal" id="btn-compartir">Compartir</button>
+        <button type="button" class="boton boton--secundario" id="btn-ver-carta">Ver la carta</button>
+        <a data-almanaque-volver hidden class="boton boton--secundario" href="https://joseleking.github.io/Almanaque/">Volver a Almanaque</a>
+      </div>
+      <p class="final__aviso" id="aviso-copia" aria-live="polite"></p>
+      <p class="modal__manana">Mañana, un texto nuevo.</p>
+    </div>
+  </dialog>
+
   <dialog class="modal" id="instrucciones" aria-labelledby="instrucciones-titulo">
     <div class="modal__hoja">
       <button type="button" class="modal__cerrar" id="btn-cerrar" aria-label="Cerrar">×</button>
@@ -127,6 +171,9 @@
       <p>Cada palabra que no sea un gazapo es un borrón. Con tres borrones se acaba la partida.</p>
       <h3>Ojo con las trampas</h3>
       <p>Algunas palabras suenan modernas o exóticas pero ya se decían entonces, como <em>canoa</em>, que ya aparece en el diario de Colón.</p>
+      <h3>La lupa</h3>
+      <p>Si te atascas, la lupa señala el párrafo en el que hay un gazapo. Hay tres por partida y cada una cuesta medio borrón.</p>
+      <p>Cada lupa afina más que la anterior: si el gazapo señalado sigue sin cazar, la siguiente señala su frase, y la última, la palabra. Si ya lo has cazado, la siguiente lupa busca otro.</p>
       <h3>Las marcas</h3>
       <ul class="leyenda">
         <li><span class="palabra palabra--gazapo palabra--quieta">gazapo</span> rodeada en rojo: gazapo cazado.</li>

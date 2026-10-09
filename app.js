@@ -11,8 +11,11 @@
   var PREFIJO_PARTIDA = 'gazapo:partida:';
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   var MESES_CORTOS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'];
-  // Al compartir: verde, gazapo cazado; rojo, borrón (trampa o fallo).
+  // Al compartir: verde, gazapo cazado; rojo, borrón (trampa o fallo); lupa, la pista.
   var EMOJI = { gazapo: '🟩', trampa: '🟥', fallo: '🟥' };
+  var EMOJI_LUPA = '🔍';
+  var COSTE_LUPA = 0.5;
+  var MAX_LUPAS = 3;
   var PALABRA = /[\p{L}\p{M}]+/gu;
   var URL_JUEGO = 'https://joseleking.github.io/Gazapo/';
 
@@ -79,14 +82,21 @@
   var reto = elegirReto(window.GAZAPO_RETOS || []);
   var claveGuardado = PREFIJO_PARTIDA + reto.fecha;
 
-  // intentos: [{ clave, tipo: 'gazapo' | 'trampa' | 'fallo' }]
-  var estado = { intentos: [] };
+  // intentos: [{ clave, pos, tipo: 'gazapo' | 'trampa' | 'fallo' }]
+  // pos: la palabra concreta que se marcó (su orden en la carta, del saludo a la firma).
+  // lupas: [{ nivel: 'parrafo' | 'frase' | 'palabra', pos: párrafo, palabra: posición del gazapo
+  //   señalado, tras: intentos que había al usarla }], hasta MAX_LUPAS.
+  var estado = { intentos: [], lupas: [] };
   var seleccion = null; // clave de la palabra seleccionada
   var seleccionBoton = null; // el botón concreto que se ha tocado
   var consultada = null;
+  var consultadaPos = null; // la aparición que se resalta mientras se lee su nota
+  var botones = []; // todas las palabras tocables, por posición
+  var parrafosCarta = []; // los párrafos tocables, del saludo a la firma
   var botonesPorClave = {};
   var textoPorClave = {};
 
+  // Se llama con la carta ya pintada, para poder situar cada intento en su palabra.
   function cargarEstado() {
     try {
       var guardado = JSON.parse(leer(claveGuardado) || 'null');
@@ -94,20 +104,57 @@
         estado.intentos = guardado.intentos.filter(function (i) {
           return i && typeof i.clave === 'string' && EMOJI[i.tipo];
         });
+        // Partidas guardadas antes de que hubiera posiciones (o con una que ya no
+        // corresponde a esa palabra): el intento pasa a la primera aparición de su clave.
+        estado.intentos.forEach(function (i) {
+          var boton = typeof i.pos === 'number' ? botones[i.pos] : null;
+          if (boton && boton.dataset.clave === i.clave) return;
+          var primero = botonesPorClave[i.clave] && botonesPorClave[i.clave][0];
+          i.pos = primero ? Number(primero.dataset.pos) : null;
+        });
       }
+      // Las partidas de antes de la lupa no tienen ninguna; las de cuando había una sola,
+      // la guardaban en «lupa».
+      var lupas = guardado && (Array.isArray(guardado.lupas) ? guardado.lupas : (guardado.lupa ? [guardado.lupa] : []));
+      // Las de entonces eran todas de párrafo, sin gazapo apuntado: se toma el primero de ese párrafo.
+      estado.lupas = (lupas || []).filter(function (l) {
+        return l && parrafosCarta[l.pos];
+      }).slice(0, MAX_LUPAS).map(function (l) {
+        var objetivo = botones[l.palabra];
+        if (!objetivo || !reto.gazapos[objetivo.dataset.clave]) {
+          objetivo = Array.prototype.filter.call(parrafosCarta[l.pos].querySelectorAll('button.palabra'), function (b) {
+            return reto.gazapos[b.dataset.clave];
+          })[0];
+        }
+        return {
+          nivel: NIVELES.indexOf(l.nivel) >= 0 ? l.nivel : 'parrafo',
+          pos: l.pos,
+          palabra: objetivo ? Number(objetivo.dataset.pos) : null,
+          tras: typeof l.tras === 'number' ? Math.min(l.tras, estado.intentos.length) : estado.intentos.length,
+        };
+      });
     } catch (e) { /* guardado corrupto: partida nueva */ }
   }
 
   function guardarEstado() {
-    guardar(claveGuardado, JSON.stringify({ intentos: estado.intentos, terminada: terminada() }));
+    guardar(claveGuardado, JSON.stringify({ intentos: estado.intentos, lupas: estado.lupas, terminada: terminada() }));
   }
 
   function cazados() {
     return estado.intentos.filter(function (i) { return i.tipo === 'gazapo'; }).length;
   }
 
+  // Puede ser medio: cada lupa cuesta medio borrón.
   function borrones() {
-    return estado.intentos.length - cazados();
+    return estado.intentos.length - cazados() + estado.lupas.length * COSTE_LUPA;
+  }
+
+  // «medio borrón», «1 borrón», «1 borrón y medio», «2 borrones y medio»…
+  function textoBorrones(b) {
+    var enteros = Math.floor(b);
+    var medio = b - enteros >= 0.5;
+    if (enteros === 0) return medio ? 'medio borrón' : '0 borrones';
+    return enteros + (enteros === 1 ? ' borrón' : ' borrones') + (medio ? ' y medio' : '');
   }
 
   function terminada() {
@@ -156,7 +203,9 @@
       boton.className = 'palabra';
       boton.textContent = palabra;
       boton.dataset.clave = clave;
+      boton.dataset.pos = botones.length;
       contenedor.appendChild(boton);
+      botones.push(boton);
       (botonesPorClave[clave] = botonesPorClave[clave] || []).push(boton);
       if (!textoPorClave[clave]) textoPorClave[clave] = palabra;
       ultimo = posicion + palabra.length;
@@ -177,44 +226,109 @@
     var carta = $('carta');
     carta.textContent = '';
     carta.appendChild(parrafo('carta__encabezado', reto.encabezado, false));
-    carta.appendChild(parrafo('carta__saludo', reto.saludo, true));
-    reto.parrafos.forEach(function (t) { carta.appendChild(parrafo('carta__parrafo', t, true)); });
-    if (reto.despedida) carta.appendChild(parrafo('carta__despedida', reto.despedida, true));
-    if (reto.firma) carta.appendChild(parrafo('carta__firma', reto.firma, true));
+    parrafosCarta = [parrafo('carta__saludo', reto.saludo, true)];
+    reto.parrafos.forEach(function (t) { parrafosCarta.push(parrafo('carta__parrafo', t, true)); });
+    if (reto.despedida) parrafosCarta.push(parrafo('carta__despedida', reto.despedida, true));
+    if (reto.firma) parrafosCarta.push(parrafo('carta__firma', reto.firma, true));
+    parrafosCarta.forEach(function (p) { carta.appendChild(p); });
   }
 
   // Aplica a los botones de la carta las marcas que corresponden al estado.
-  function marcarPalabras(animarClave) {
+  // La marca va solo en la palabra que se tocó; las demás apariciones de esa clave
+  // quedan sin marcar, pero ya no se pueden jugar.
+  function marcarPalabras(animarPos) {
     var fin = terminada();
     Object.keys(botonesPorClave).forEach(function (clave) {
       var intento = intentoDe(clave);
-      var revelada = fin && !intento && reto.gazapos[clave];
-      var consultable = fin && ((intento && intento.tipo !== 'fallo') || revelada);
-      botonesPorClave[clave].forEach(function (b) {
+      var sinCazar = fin && !intento && reto.gazapos[clave];
+      var consultable = fin && ((intento && intento.tipo !== 'fallo') || sinCazar);
+      botonesPorClave[clave].forEach(function (b, n) {
+        var pos = Number(b.dataset.pos);
+        var marcada = intento && intento.pos === pos;
+        // Al final, el gazapo que faltaba se señala solo en su primera aparición.
+        var revelada = sinCazar && n === 0;
         b.className = 'palabra';
-        if (intento) b.classList.add('palabra--' + intento.tipo);
-        if (intento && intento.tipo === 'gazapo' && clave !== animarClave) b.classList.add('palabra--quieta');
+        if (marcada) b.classList.add('palabra--' + intento.tipo);
+        if (marcada && intento.tipo === 'gazapo' && pos !== animarPos) b.classList.add('palabra--quieta');
         if (revelada) b.classList.add('palabra--revelada');
         if (consultable) b.classList.add('palabra--consultable');
         if (b === seleccionBoton) b.classList.add('palabra--seleccionada');
-        if (clave === consultada) b.classList.add('palabra--consultada');
+        if (clave === consultada && pos === consultadaPos) b.classList.add('palabra--consultada');
 
         // Resueltas: no se pueden seleccionar. Al terminar, gazapos y trampas abren su nota.
         if ((intento || fin) && !consultable) b.setAttribute('aria-disabled', 'true');
         else b.removeAttribute('aria-disabled');
         b.setAttribute('aria-pressed', b === seleccionBoton ? 'true' : 'false');
 
-        var etiqueta = intento ? { gazapo: 'gazapo', trampa: 'trampa', fallo: 'borrón' }[intento.tipo] : (revelada ? 'gazapo sin cazar' : '');
+        var etiqueta = marcada ? { gazapo: 'gazapo', trampa: 'trampa', fallo: 'borrón' }[intento.tipo] : (revelada ? 'gazapo sin cazar' : '');
         if (etiqueta) b.setAttribute('aria-label', b.textContent + ' (' + etiqueta + ')');
         else b.removeAttribute('aria-label');
       });
     });
+    marcarLupas();
+    var senalada = document.querySelector('#carta .palabra--lupa');
+    if (senalada && !senalada.getAttribute('aria-label')) senalada.setAttribute('aria-label', senalada.textContent + ' (señalada por la lupa)');
+    compensarRenglon();
+  }
+
+  // La palabra seleccionada reserva a los lados el hueco de su círculo. Si en su renglón
+  // no queda sitio para ese hueco, el texto que la sigue saltaría de renglón: para
+  // evitarlo, los demás trozos del renglón se aprietan (letter-spacing) justo lo que
+  // falta, repartido entre todas sus letras (no llega a medio píxel por letra).
+  var compensados = [];
+
+  function compensarRenglon() {
+    compensados.forEach(function (t) { t.style.letterSpacing = ''; });
+    compensados = [];
+    if (!seleccionBoton) return;
+    // Se mide el renglón como queda sin la selección.
+    seleccionBoton.classList.remove('palabra--seleccionada');
+    var propio = seleccionBoton.parentNode;
+    var arriba = propio.getBoundingClientRect().top;
+    var linea = Array.prototype.filter.call(propio.parentNode.querySelectorAll('.trozo'), function (t) {
+      return Math.abs(t.getBoundingClientRect().top - arriba) < 2;
+    });
+    var tam = parseFloat(getComputedStyle(propio).fontSize) || 20;
+    var libre = propio.parentNode.getBoundingClientRect().right - linea[linea.length - 1].getBoundingClientRect().right;
+    // El hueco es 2 × --circulo-hueco (0,25em); algo más, porque lo que mide el
+    // navegador y lo que usa al partir renglones no siempre coinciden al píxel.
+    var falta = 0.6 * tam - libre;
+    // El primero del renglón no se aprieta: podría caber al final del anterior.
+    compensados = falta > 0 ? linea.slice(1).filter(function (t) { return t !== propio; }) : [];
+    if (compensados.length) {
+      // Lo que gana cada letra depende del navegador, así que se mide con una prueba.
+      var anchos = function () {
+        return compensados.reduce(function (s, t) { return s + t.getBoundingClientRect().width; }, 0);
+      };
+      var antes = anchos();
+      compensados.forEach(function (t) { t.style.letterSpacing = '-0.02em'; });
+      var ganado = antes - anchos();
+      var apretar = ganado > 0 ? Math.max(-0.02 * falta / ganado, -0.1) : 0;
+      compensados.forEach(function (t) { t.style.letterSpacing = apretar ? apretar.toFixed(4) + 'em' : ''; });
+    }
+    seleccionBoton.classList.add('palabra--seleccionada');
+  }
+
+  // Al cambiar el ancho o cargar las fuentes cambian los renglones.
+  function recolocar() {
+    compensarRenglon();
+    colocarBurbuja();
+    recolocarLinea();
   }
 
   /* ---------- Marcador ---------- */
 
   var SVG = 'http://www.w3.org/2000/svg';
+  var GOTA = 'M12 2.5C9.5 7 6 10.5 6 14.5a6 6 0 0 0 12 0C18 10.5 14.5 7 12 2.5Z';
+  var idsSvg = 0;
 
+  function nodoSvg(nombre, atributos) {
+    var el = document.createElementNS(SVG, nombre);
+    Object.keys(atributos || {}).forEach(function (a) { el.setAttribute(a, atributos[a]); });
+    return el;
+  }
+
+  // llena: true, false o 'media' (la gota del medio borrón de una lupa).
   function icono(forma, llena, nueva) {
     var svg = document.createElementNS(SVG, 'svg');
     svg.setAttribute('viewBox', '0 0 24 24');
@@ -228,10 +342,16 @@
       figura.setAttribute('ry', '8.5');
       figura.setAttribute('transform', 'rotate(-12 12 12)');
       figura.setAttribute('class', 'marca-circulo' + (llena ? ' marca-circulo--llena' : ''));
+    } else if (llena === 'media') {
+      // Contorno vacío y, recortada por debajo de la mitad, la gota llena.
+      var id = 'media-gota-' + (++idsSvg);
+      var recorte = nodoSvg('clipPath', { id: id });
+      recorte.appendChild(nodoSvg('rect', { x: 0, y: 13, width: 24, height: 11 }));
+      svg.appendChild(recorte);
+      svg.appendChild(nodoSvg('path', { d: GOTA, class: 'marca-gota marca-gota--llena', 'clip-path': 'url(#' + id + ')' }));
+      figura = nodoSvg('path', { d: GOTA, class: 'marca-gota' });
     } else {
-      figura = document.createElementNS(SVG, 'path');
-      figura.setAttribute('d', 'M12 2.5C9.5 7 6 10.5 6 14.5a6 6 0 0 0 12 0C18 10.5 14.5 7 12 2.5Z');
-      figura.setAttribute('class', 'marca-gota' + (llena ? ' marca-gota--llena' : ''));
+      figura = nodoSvg('path', { d: GOTA, class: 'marca-gota' + (llena ? ' marca-gota--llena' : '') });
     }
     svg.appendChild(figura);
     if (nueva) svg.classList.add('marca--nueva');
@@ -246,11 +366,182 @@
     g.textContent = '';
     t.textContent = '';
     for (var i = 0; i < TOTAL_GAZAPOS; i++) g.appendChild(icono('circulo', i < c, animar === 'gazapo' && i === c - 1));
-    for (var j = 0; j < MAX_BORRONES; j++) t.appendChild(icono('gota', j < b, animar === 'borron' && j === b - 1));
+    for (var j = 0; j < MAX_BORRONES; j++) {
+      var llena = j + 1 <= b ? true : (j + 0.5 <= b ? 'media' : false);
+      t.appendChild(icono('gota', llena, animar === 'borron' && j === Math.ceil(b) - 1));
+    }
     g.setAttribute('aria-label', c + ' de ' + TOTAL_GAZAPOS + ' gazapos cazados');
-    t.setAttribute('aria-label', b + ' de ' + MAX_BORRONES + ' borrones');
+    t.setAttribute('aria-label', textoBorrones(Math.min(b, MAX_BORRONES)) + ' de ' + MAX_BORRONES);
     g.setAttribute('role', 'img');
     t.setAttribute('role', 'img');
+    pintarLupa();
+  }
+
+  /* ---------- La lupa ---------- */
+
+  // Tres por partida, cada vez más finas sobre un mismo gazapo: la primera señala su
+  // párrafo; si sigue sin cazar, la segunda su frase y la tercera la palabra. Cazado ese,
+  // la siguiente vuelve a empezar por el párrafo de otro (el primero sin cazar, en orden),
+  // o por su frase si ese párrafo ya estaba señalado.
+  var NIVELES = ['parrafo', 'frase', 'palabra'];
+  var QUE_SENALA = { parrafo: 'el párrafo', frase: 'la frase', palabra: 'la palabra' };
+
+  function lupasQuedan() {
+    return MAX_LUPAS - estado.lupas.length;
+  }
+
+  function parrafoDe(boton) {
+    return parrafosCarta.indexOf(boton.closest('p'));
+  }
+
+  // El primer gazapo sin cazar, en orden de lectura: su primera aparición.
+  function gazapoSinCazar() {
+    for (var i = 0; i < botones.length; i++) {
+      var clave = botones[i].dataset.clave;
+      if (reto.gazapos[clave] && !intentoDe(clave)) return botones[i];
+    }
+    return null;
+  }
+
+  // Lo que señalaría la próxima lupa: { nivel, palabra (posición del gazapo) }.
+  function proximaLupa() {
+    var ultima = estado.lupas[estado.lupas.length - 1];
+    var objetivo = ultima && botones[ultima.palabra];
+    if (objetivo && !intentoDe(objetivo.dataset.clave)) {
+      var nivel = NIVELES.indexOf(ultima.nivel) + 1;
+      if (nivel < NIVELES.length) return { nivel: NIVELES[nivel], palabra: ultima.palabra };
+    }
+    var boton = gazapoSinCazar();
+    if (!boton) return null;
+    // Si su párrafo ya lo señaló otra lupa, se pasa directamente a la frase.
+    var yaSenalado = estado.lupas.some(function (l) { return l.nivel === 'parrafo' && l.pos === parrafoDe(boton); });
+    return { nivel: yaSenalado ? 'frase' : 'parrafo', palabra: Number(boton.dataset.pos) };
+  }
+
+  // No se puede usar si su medio borrón acabara la partida.
+  function lupaDisponible() {
+    return lupasQuedan() > 0 && !terminada() && borrones() + COSTE_LUPA < MAX_BORRONES && !!proximaLupa();
+  }
+
+  function pintarLupa() {
+    var boton = $('btn-lupa');
+    var quedan = lupasQuedan();
+    var disponible = lupaDisponible();
+    var proxima = disponible ? proximaLupa() : null;
+    boton.disabled = !disponible;
+    boton.classList.toggle('boton-lupa--usada', quedan === 0);
+    $('lupas-quedan').textContent = quedan;
+    var lupas = quedan === 1 ? '1 lupa' : quedan + ' lupas';
+    boton.setAttribute('aria-label', quedan === 0 ? 'Lupas usadas'
+      : (disponible ? 'Usar una lupa: señala ' + QUE_SENALA[proxima.nivel] + ' de un gazapo (cuesta medio borrón; quedan ' + lupas + ')'
+        : 'Lupa no disponible (quedan ' + lupas + ')'));
+    if (proxima) {
+      $('confirmar-lupa-texto').textContent = '¿Usar una lupa? Señalará ' + QUE_SENALA[proxima.nivel] +
+        ' de un gazapo y cuesta medio borrón. ' + (quedan === 1 ? 'Es la última.' : 'Te quedan ' + quedan + '.');
+    }
+    if (!disponible) cerrarConfirmacionLupa(false);
+  }
+
+  // Los trozos de la frase en la que está el botón (las frases acaban en . ; : ? ! …).
+  function fraseDe(boton) {
+    var trozos = Array.prototype.slice.call(boton.closest('p').querySelectorAll('.trozo'));
+    var i = trozos.indexOf(boton.parentNode);
+    var fin = /[.;:?!…][»"”’)]*$/;
+    var desde = i;
+    while (desde > 0 && !fin.test(trozos[desde - 1].textContent)) desde--;
+    var hasta = i;
+    while (hasta < trozos.length - 1 && !fin.test(trozos[hasta].textContent)) hasta++;
+    return trozos.slice(desde, hasta + 1);
+  }
+
+  function avisoLector(texto, antesDe) {
+    var aviso = document.createElement('span');
+    aviso.className = 'solo-lector aviso-lupa';
+    aviso.textContent = texto;
+    antesDe.parentNode.insertBefore(aviso, antesDe);
+  }
+
+  // Pinta lo que han señalado las lupas. El párrafo queda marcado toda la partida; la
+  // frase y la palabra, mientras su gazapo siga sin cazar.
+  function marcarLupas() {
+    Array.prototype.forEach.call(document.querySelectorAll('#carta .aviso-lupa'), function (a) { a.remove(); });
+    Array.prototype.forEach.call(document.querySelectorAll('#carta .trozo--lupa, #carta .palabra--lupa'), function (el) {
+      el.classList.remove('trozo--lupa', 'palabra--lupa');
+    });
+    parrafosCarta.forEach(function (p) { p.classList.remove('parrafo--lupa'); });
+
+    var fin = terminada();
+    estado.lupas.forEach(function (l) {
+      var objetivo = botones[l.palabra];
+      if (!objetivo) return;
+      var pendiente = !fin && !intentoDe(objetivo.dataset.clave);
+      if (l.nivel === 'parrafo') {
+        var p = parrafosCarta[l.pos];
+        if (!p.classList.contains('parrafo--lupa')) {
+          p.classList.add('parrafo--lupa');
+          avisoLector('Párrafo señalado por la lupa: ', p.firstChild);
+        }
+      } else if (l.nivel === 'frase' && pendiente) {
+        var frase = fraseDe(objetivo);
+        frase.forEach(function (t) { t.classList.add('trozo--lupa'); });
+        avisoLector('Frase señalada por la lupa: ', frase[0]);
+      } else if (l.nivel === 'palabra' && pendiente) {
+        objetivo.classList.add('palabra--lupa');
+      }
+    });
+  }
+
+  function abrirConfirmacionLupa() {
+    if (!lupaDisponible()) return;
+    $('confirmar-lupa').hidden = false;
+    $('btn-lupa').setAttribute('aria-expanded', 'true');
+    $('btn-usar-lupa').focus();
+  }
+
+  function cerrarConfirmacionLupa(enfocar) {
+    var caja = $('confirmar-lupa');
+    if (caja.hidden) return;
+    caja.hidden = true;
+    $('btn-lupa').setAttribute('aria-expanded', 'false');
+    if (enfocar && !$('btn-lupa').disabled) $('btn-lupa').focus();
+  }
+
+  function usarLupa() {
+    if (!lupaDisponible()) return;
+    var proxima = proximaLupa();
+    var objetivo = botones[proxima.palabra];
+    estado.lupas.push({ nivel: proxima.nivel, pos: parrafoDe(objetivo), palabra: proxima.palabra, tras: estado.intentos.length });
+    guardarEstado();
+    cerrarConfirmacionLupa(false);
+    pintarMarcador('borron');
+    mostrarNotaLupa(proxima.nivel);
+    marcarPalabras();
+    pintarBoton();
+
+    // El foco pasa del botón a lo señalado, para leerlo.
+    var destino = proxima.nivel === 'parrafo' ? parrafosCarta[parrafoDe(objetivo)] : objetivo;
+    if (destino.tagName === 'P') destino.setAttribute('tabindex', '-1');
+    destino.focus({ preventScroll: true });
+    if (destino.scrollIntoView) {
+      var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      destino.scrollIntoView({ block: proxima.nivel === 'parrafo' ? 'nearest' : 'center', behavior: reducido ? 'auto' : 'smooth' });
+    }
+  }
+
+  function prepararLupa() {
+    $('btn-lupa').addEventListener('click', function () {
+      if ($('confirmar-lupa').hidden) abrirConfirmacionLupa();
+      else cerrarConfirmacionLupa(true);
+    });
+    $('btn-usar-lupa').addEventListener('click', usarLupa);
+    $('btn-cancelar-lupa').addEventListener('click', function () { cerrarConfirmacionLupa(true); });
+    $('confirmar-lupa').addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') cerrarConfirmacionLupa(true);
+    });
+    // Tocar fuera de la burbuja la cierra.
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#confirmar-lupa, #btn-lupa')) cerrarConfirmacionLupa(false);
+    });
   }
 
   /* ---------- Nota del corrector ---------- */
@@ -262,7 +553,8 @@
     return el;
   }
 
-  function mostrarNota(clave, desplazar) {
+  // pos: la aparición que se ha tocado, para resaltarla mientras se lee la nota.
+  function mostrarNota(clave, pos, desplazar) {
     var tipo = tipoDe(clave);
     var palabra = textoPorClave[clave] || clave;
     var nota = $('nota');
@@ -289,10 +581,29 @@
 
     nota.hidden = false;
     consultada = tipo === 'fallo' ? null : clave;
+    consultadaPos = pos;
     if (desplazar && nota.scrollIntoView) {
       var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       nota.scrollIntoView({ block: 'nearest', behavior: reducido ? 'auto' : 'smooth' });
     }
+  }
+
+  function mostrarNotaLupa(nivel) {
+    var nota = $('nota');
+    var cuerpo = $('nota-cuerpo');
+    cuerpo.textContent = '';
+    nota.className = 'nota nota--lupa';
+    cuerpo.appendChild(p({
+      parrafo: 'La lupa señala un párrafo: en él hay un gazapo sin cazar.',
+      frase: 'La lupa afina: el gazapo está en la frase señalada.',
+      palabra: 'La lupa lo señala: el gazapo es la palabra subrayada.',
+    }[nivel], 'nota__veredicto'));
+    var quedan = lupasQuedan();
+    cuerpo.appendChild(p('Te cuesta medio borrón. Ahora llevas ' + textoBorrones(borrones()) + '. ' +
+      (quedan === 0 ? 'Ya no te quedan lupas.' : (quedan === 1 ? 'Te queda 1 lupa.' : 'Te quedan ' + quedan + ' lupas.'))));
+    nota.hidden = false;
+    consultada = null;
+    consultadaPos = null;
   }
 
   /* ---------- Botón de confirmar (burbuja bajo la palabra) ---------- */
@@ -336,13 +647,24 @@
 
   /* ---------- Final ---------- */
 
+  // La partida en orden: 'gazapo', 'trampa', 'fallo' y, donde se usó cada lupa, 'lupa'.
+  function secuencia() {
+    var lista = [];
+    estado.intentos.forEach(function (intento, n) {
+      estado.lupas.forEach(function (l) { if (l.tras === n) lista.push('lupa'); });
+      lista.push(intento.tipo);
+    });
+    estado.lupas.forEach(function (l) { if (l.tras >= estado.intentos.length) lista.push('lupa'); });
+    return lista;
+  }
+
+  function resultado() {
+    return cazados() + '/' + TOTAL_GAZAPOS + ' gazapos · ' + textoBorrones(borrones());
+  }
+
   function textoCompartir() {
-    var c = cazados();
-    var b = borrones();
-    var cuadros = estado.intentos.map(function (i) { return EMOJI[i.tipo]; }).join('');
-    return 'Gazapo · ' + fechaCorta(reto.fecha) + '\n' + cuadros + '\n' +
-      c + '/' + TOTAL_GAZAPOS + ' gazapos · ' + b + (b === 1 ? ' borrón' : ' borrones') + '\n' +
-      URL_JUEGO;
+    var cuadros = secuencia().map(function (t) { return t === 'lupa' ? EMOJI_LUPA : EMOJI[t]; }).join('');
+    return 'Gazapo · ' + fechaCorta(reto.fecha) + '\n' + cuadros + '\n' + resultado() + '\n' + URL_JUEGO;
   }
 
   // En el móvil abre el menú de compartir del sistema (WhatsApp, X, Bluesky…).
@@ -358,7 +680,10 @@
     }
   }
 
-  function pintarFinal(enfocar) {
+  // Rellena la carta corregida (y el aviso bajo la carta). abrir: 'ya', 'luego' (tras
+  // un momento, para que se vea el sello del último gazapo) o nada (al cargar la página:
+  // se abre después de la portada y de las instrucciones).
+  function pintarFinal(abrir) {
     var c = cazados();
     var b = borrones();
     var titulo;
@@ -368,19 +693,96 @@
       resumen = 'Tres gazapos y ni un borrón. La carta de ' + reto.anio + ' queda limpia.';
     } else if (c >= TOTAL_GAZAPOS) {
       titulo = 'Carta corregida';
-      resumen = 'Has cazado los tres gazapos con ' + b + (b === 1 ? ' borrón.' : ' borrones.');
+      resumen = 'Has cazado los tres gazapos con ' + textoBorrones(b) + '.';
     } else {
       titulo = 'La carta se te escapa';
-      resumen = 'Tres borrones. Has cazado ' + c + ' de ' + TOTAL_GAZAPOS +
+      resumen = (b > MAX_BORRONES ? 'Tres borrones y medio' : 'Tres borrones') + '. Has cazado ' + c + ' de ' + TOTAL_GAZAPOS +
         ' gazapos; los que faltaban quedan señalados en la carta.';
     }
     $('final-titulo').textContent = titulo;
-    $('final-resumen').textContent = resumen + ' Toca un gazapo o una trampa para releer su nota.';
+    $('final-pagina-titulo').textContent = titulo;
+    $('final-resumen').textContent = resumen;
     $('compartir-texto').textContent = textoCompartir();
+    pintarSoluciones();
     $('final').hidden = false;
-    if (enfocar) $('final-titulo').focus({ preventScroll: true });
+
+    if (abrir === 'ya') abrirFinal();
+    else if (abrir === 'luego') {
+      var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(abrirFinal, reducido ? 300 : 1100);
+    }
 
     if (window.almanaqueHecho) window.almanaqueHecho({ aciertos: c, total: TOTAL_GAZAPOS });
+  }
+
+  // Los tres gazapos, en orden de lectura, y las trampas en las que se cayó.
+  function pintarSoluciones() {
+    var lista = $('soluciones');
+    lista.textContent = '';
+    var gazapos = Object.keys(reto.gazapos).sort(function (a, b) { return (posDe(a) || 0) - (posDe(b) || 0); });
+    var trampas = estado.intentos.filter(function (i) { return i.tipo === 'trampa' && reto.trampas[i.clave]; })
+      .map(function (i) { return i.clave; });
+
+    gazapos.concat(trampas).forEach(function (clave) {
+      var esGazapo = !!reto.gazapos[clave];
+      var dato = esGazapo ? reto.gazapos[clave] : reto.trampas[clave];
+      var cazado = esGazapo && !!intentoDe(clave);
+      var li = document.createElement('li');
+      li.id = 'solucion-' + clave;
+      li.className = 'solucion solucion--' + (esGazapo ? (cazado ? 'cazado' : 'escapado') : 'trampa');
+
+      var cabeza = document.createElement('div');
+      cabeza.className = 'solucion__cabeza';
+      var muestra = document.createElement('span');
+      muestra.className = 'palabra palabra--quieta ' + (esGazapo ? (cazado ? 'palabra--gazapo' : 'palabra--revelada') : 'palabra--trampa');
+      muestra.textContent = textoPorClave[clave] || dato.termino;
+      cabeza.appendChild(muestra);
+      var detalle = esGazapo ? (cazado ? 'cazado' : 'se te escapó') : 'trampa';
+      if (typeof dato.desde === 'number') {
+        detalle += ' · ' + (esGazapo ? '' : 'ya en ') + textoAnio(dato) + (esGazapo ? ' (' + textoDistancia(dato) + ')' : '');
+      }
+      var linea = document.createElement('span');
+      linea.className = 'solucion__detalle';
+      linea.textContent = detalle;
+      cabeza.appendChild(linea);
+      li.appendChild(cabeza);
+      li.appendChild(p(dato.explicacion, 'solucion__explicacion'));
+      if (esGazapo && dato.epoca) li.appendChild(p(dato.epoca, 'solucion__epoca'));
+      lista.appendChild(li);
+    });
+  }
+
+  function abrirFinal() {
+    var dialogo = $('final-dialogo');
+    var instrucciones = $('instrucciones');
+    if (dialogo.open || (instrucciones && instrucciones.open)) return;
+    if (dialogo.showModal) dialogo.showModal();
+    else dialogo.setAttribute('open', '');
+    dialogo.scrollTop = 0;
+    // La línea se dibuja con el diálogo abierto, que es cuando tiene ancho.
+    pintarLineaTiempo(true);
+    $('final-titulo').focus({ preventScroll: true });
+  }
+
+  function cerrarFinal() {
+    var dialogo = $('final-dialogo');
+    if (dialogo.close) dialogo.close();
+    else dialogo.removeAttribute('open');
+  }
+
+  function prepararFinal() {
+    var dialogo = $('final-dialogo');
+    $('btn-ver-final').addEventListener('click', abrirFinal);
+    $('btn-cerrar-final').addEventListener('click', cerrarFinal);
+    $('btn-ver-carta').addEventListener('click', cerrarFinal);
+    // El navegador devuelve el foco a donde estaba al abrir; después, se lleva al botón de volver a abrirla.
+    dialogo.addEventListener('close', function () {
+      setTimeout(function () { $('btn-ver-final').focus({ preventScroll: true }); }, 0);
+    });
+    // Cierre al tocar fuera de la hoja.
+    dialogo.addEventListener('click', function (e) {
+      if (e.target === dialogo) cerrarFinal();
+    });
   }
 
   function copiar() {
@@ -405,6 +807,291 @@
     }
   }
 
+  /* ---------- Línea del tiempo (al terminar) ---------- */
+
+  var ROMANOS = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI'];
+  var FUENTE_LINEA = '"EB Garamond", Garamond, Georgia, serif';
+  var NIVEL_ALTO = 58; // alto de cada fila de etiquetas
+  var lineaAncho = 0;
+  var medidor = null;
+
+  function siglo(anio) {
+    return ROMANOS[Math.floor((anio - 1) / 100) + 1];
+  }
+
+  function textoAnio(x) {
+    return x.aprox ? 's. ' + siglo(x.desde) : String(x.desde);
+  }
+
+  // «+59 años»; si la fecha es solo un siglo, redondeada: «≈ +160 años».
+  function textoDistancia(x) {
+    var d = x.desde - reto.anio;
+    if (d === 0) return 'el mismo año';
+    var n = Math.abs(d);
+    if (x.aprox) n = Math.max(10, Math.round(n / 10) * 10);
+    return (x.aprox ? '≈ ' : '') + (d > 0 ? '+' : '−') + n + (n === 1 ? ' año' : ' años');
+  }
+
+  function anchoTexto(texto, fuente) {
+    medidor = medidor || document.createElement('canvas').getContext('2d');
+    medidor.font = fuente;
+    return medidor.measureText(texto).width;
+  }
+
+  // La aparición que abre la nota: la marcada o, si no, la primera.
+  function posDe(clave) {
+    var intento = intentoDe(clave);
+    if (intento && typeof intento.pos === 'number') return intento.pos;
+    var primero = botonesPorClave[clave] && botonesPorClave[clave][0];
+    return primero ? Number(primero.dataset.pos) : null;
+  }
+
+  // Los tres gazapos (cazados o no) y las trampas que tocó el jugador.
+  function elementosLinea() {
+    var lista = [];
+    Object.keys(reto.gazapos).forEach(function (clave) {
+      var g = reto.gazapos[clave];
+      if (typeof g.desde !== 'number') return;
+      lista.push({ clave: clave, tipo: 'gazapo', cazado: !!intentoDe(clave), desde: g.desde, aprox: !!g.aprox, palabra: textoPorClave[clave] || g.termino });
+    });
+    estado.intentos.forEach(function (i) {
+      var t = reto.trampas[i.clave];
+      if (i.tipo !== 'trampa' || !t || typeof t.desde !== 'number') return;
+      lista.push({ clave: i.clave, tipo: 'trampa', desde: t.desde, aprox: !!t.aprox, palabra: textoPorClave[i.clave] || t.termino });
+    });
+    return lista.sort(function (a, b) { return a.desde - b.desde; });
+  }
+
+  function pasoRedondo(bruto) {
+    var pasos = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000];
+    for (var i = 0; i < pasos.length; i++) if (pasos[i] >= bruto) return pasos[i];
+    return 1000;
+  }
+
+  // Escala lineal entre el año más antiguo y el más moderno. Si un hueco de siglos
+  // apretara los demás puntos, se corta («//») y cada tramo conserva su propia escala.
+  function hacerEscala(anios, x0, x1) {
+    var orden = anios.slice().sort(function (a, b) { return a - b; })
+      .filter(function (a, i, l) { return i === 0 || a !== l[i - 1]; });
+    var total = orden[orden.length - 1] - orden[0];
+    var ancho = x1 - x0;
+    var apretado = orden.some(function (a, i) { return i > 0 && (a - orden[i - 1]) / total * ancho < 30; });
+    var grupos = [[orden[0]]];
+    for (var i = 1; i < orden.length; i++) {
+      var hueco = orden[i] - orden[i - 1];
+      if (apretado && hueco > 0.35 * total && hueco >= 30) grupos.push([orden[i]]);
+      else grupos[grupos.length - 1].push(orden[i]);
+    }
+
+    // Cada tramo, con un poco de margen y los extremos en años redondos.
+    var tramos = grupos.map(function (g) {
+      var a = g[0];
+      var b = g[g.length - 1];
+      var paso = pasoRedondo(Math.max(b - a, 1) / 3);
+      var margen = Math.max(1, (b - a) * 0.06);
+      return {
+        a: Math.floor((a - margen) / paso) * paso,
+        b: Math.ceil((b + margen) / paso) * paso,
+        paso: paso,
+        puntual: a === b,
+      };
+    });
+
+    // Años por píxel: los tramos reparten el ancho, sin estirar unos pocos años
+    // más allá de un máximo; lo que sobra va a los cortes (o a centrar la línea).
+    var cortes = tramos.length - 1;
+    var anchoCorte = 30;
+    var suma = tramos.reduce(function (s, t) { return s + (t.b - t.a); }, 0);
+    var k = Math.min((ancho - cortes * anchoCorte) / suma, ancho / 25);
+    var sobra = ancho - cortes * anchoCorte - k * suma;
+    var x = x0 + (cortes ? 0 : sobra / 2);
+    var huecoCorte = cortes ? anchoCorte + sobra / cortes : 0;
+    tramos.forEach(function (t, n) {
+      t.xa = x;
+      t.xb = x + k * (t.b - t.a);
+      x = t.xb + huecoCorte;
+      t.corteX = n < cortes ? t.xb + huecoCorte / 2 : null;
+    });
+
+    return {
+      tramos: tramos,
+      x: function (anio) {
+        for (var j = 0; j < tramos.length; j++) {
+          var t = tramos[j];
+          if (anio >= t.a && anio <= t.b) return t.xa + (anio - t.a) * (t.xb - t.xa) / ((t.b - t.a) || 1);
+        }
+        return x0;
+      },
+    };
+  }
+
+  // Coloca cada etiqueta en la fila más baja en la que no pise a otra.
+  // reservado: tramos de la primera fila que no se pueden ocupar (la raya de la carta).
+  function escalonar(etiquetas, ancho, reservado) {
+    var filas = [reservado || []];
+    etiquetas.forEach(function (e) {
+      e.centro = Math.min(Math.max(e.x, e.ancho / 2 + 2), ancho - e.ancho / 2 - 2);
+      var izq = e.centro - e.ancho / 2;
+      var der = e.centro + e.ancho / 2;
+      for (var n = 0; ; n++) {
+        filas[n] = filas[n] || [];
+        var libre = filas[n].every(function (o) { return der + 6 <= o.izq || izq >= o.der + 6; });
+        if (libre) {
+          filas[n].push({ izq: izq, der: der });
+          e.nivel = n;
+          return;
+        }
+      }
+    });
+    return filas.length;
+  }
+
+  function textoSvg(x, y, texto, clase, anchor) {
+    var t = nodoSvg('text', { x: x.toFixed(1), y: y.toFixed(1), class: clase, 'text-anchor': anchor || 'middle' });
+    t.textContent = texto;
+    return t;
+  }
+
+  function resumenLinea(elementos) {
+    var partes = ['La carta es de ' + reto.anio];
+    elementos.forEach(function (e) {
+      var d = e.desde - reto.anio;
+      var cuando = d === 0 ? 'el mismo año' : (e.aprox ? 'unos ' : '') + textoDistancia(e).replace(/^≈ /, '').replace(/^[+−]/, '') + (d > 0 ? ' después' : ' antes');
+      var anio = e.aprox ? 'siglo ' + siglo(e.desde) : e.desde;
+      var que = e.tipo === 'trampa' ? 'trampa ' + e.palabra : e.palabra + (e.cazado ? ' (cazado)' : ' (se escapó)');
+      partes.push(que + ', ' + anio + ', ' + cuando);
+    });
+    return partes.join('; ') + '.';
+  }
+
+  function pintarLineaTiempo(animar) {
+    var caja = $('linea-tiempo');
+    var ancho = caja.clientWidth;
+    var elementos = elementosLinea();
+    if (!ancho || !elementos.length) return;
+    lineaAncho = ancho;
+
+    var margen = 14;
+    var escala = hacerEscala([reto.anio].concat(elementos.map(function (e) { return e.desde; })), margen, ancho - margen);
+
+    // Etiquetas de gazapos y trampas, sobre la línea.
+    var fPalabra = '500 15px ' + FUENTE_LINEA;
+    var fAnio = '400 14px ' + FUENTE_LINEA;
+    var fDistancia = 'italic 400 13px ' + FUENTE_LINEA;
+    elementos.forEach(function (e) {
+      e.x = escala.x(e.desde);
+      e.lineas = [e.palabra, textoAnio(e)];
+      if (e.tipo === 'gazapo') e.lineas.push(textoDistancia(e));
+      e.ancho = Math.max(anchoTexto(e.lineas[0], fPalabra), anchoTexto(e.lineas[1], fAnio),
+        e.lineas[2] ? anchoTexto(e.lineas[2], fDistancia) : 0) + 4;
+    });
+    var cartaX = escala.x(reto.anio);
+    var niveles = escalonar(elementos, ancho, [{ izq: cartaX - 2, der: cartaX + 2 }]);
+    var ejeY = 10 + niveles * NIVEL_ALTO + 14;
+    var alto = ejeY + 72;
+
+    var svg = nodoSvg('svg', { viewBox: '0 0 ' + ancho + ' ' + alto, width: ancho, height: alto, role: 'img', class: 'linea__svg' });
+    svg.setAttribute('aria-label', resumenLinea(elementos));
+
+    // El eje, tramo a tramo, con los cortes «//».
+    escala.tramos.forEach(function (t) {
+      svg.appendChild(nodoSvg('line', { x1: t.xa, y1: ejeY, x2: t.xb, y2: ejeY, class: 'linea__eje' }));
+      if (t.corteX !== null) {
+        [-4, 3].forEach(function (dx) {
+          svg.appendChild(nodoSvg('line', { x1: t.corteX + dx - 3, y1: ejeY + 7, x2: t.corteX + dx + 3, y2: ejeY - 7, class: 'linea__barra' }));
+        });
+      }
+    });
+
+    // La carta: raya vertical, sello de lacre y su etiqueta, bajo la línea.
+    var etiquetaCarta = 'La carta · ' + reto.anio;
+    var anchoCarta = anchoTexto(etiquetaCarta, '500 15px ' + FUENTE_LINEA);
+    var centroCarta = Math.min(Math.max(cartaX, anchoCarta / 2 + 2), ancho - anchoCarta / 2 - 2);
+    var carta = nodoSvg('g', { class: 'linea__carta linea__aparece', style: 'animation-delay: 0s' });
+    carta.appendChild(nodoSvg('line', { x1: cartaX, y1: ejeY - 16, x2: cartaX, y2: ejeY + 18, class: 'linea__raya' }));
+    carta.appendChild(nodoSvg('circle', { cx: cartaX, cy: ejeY + 30, r: 10, class: 'linea__sello' }));
+    carta.appendChild(nodoSvg('circle', { cx: cartaX, cy: ejeY + 30, r: 5.5, class: 'linea__sello-dentro' }));
+    carta.appendChild(textoSvg(centroCarta, ejeY + 62, etiquetaCarta, 'linea__texto-carta'));
+    svg.appendChild(carta);
+
+    // Años redondos bajo la línea: los extremos y, si caben, alguno intermedio.
+    // A su altura solo estorba el sello; la etiqueta de la carta va más abajo.
+    var ocupado = [[cartaX - 14, cartaX + 14]];
+    var marcas = [];
+    escala.tramos.forEach(function (t) {
+      if (t.puntual) return;
+      marcas.push({ anio: t.a, lado: -1 }, { anio: t.b, lado: 1 });
+      for (var a = t.a + t.paso; a < t.b; a += t.paso) marcas.push({ anio: a, lado: 0 });
+    });
+    marcas.forEach(function (m) {
+      var x = escala.x(m.anio);
+      var w = anchoTexto(String(m.anio), fAnio);
+      svg.appendChild(nodoSvg('line', { x1: x, y1: ejeY - 4, x2: x, y2: ejeY + 4, class: 'linea__marca' }));
+      // Centrado bajo su marca; en los extremos, si no cabe, hacia fuera.
+      var opciones = [x - w / 2];
+      if (m.lado < 0) opciones.push(x - w + 2);
+      if (m.lado > 0) opciones.push(x - 2);
+      for (var i = 0; i < opciones.length; i++) {
+        var izq = Math.min(Math.max(0, opciones[i]), ancho - w);
+        var der = izq + w;
+        var choca = ocupado.some(function (o) { return der + 6 > o[0] && izq - 6 < o[1]; });
+        if (choca) continue;
+        ocupado.push([izq, der]);
+        svg.appendChild(textoSvg((izq + der) / 2, ejeY + 21, String(m.anio), 'linea__texto-marca'));
+        return;
+      }
+    });
+
+    // Puntos, de izquierda a derecha, con su etiqueta encima. Las guías van en una
+    // capa de fondo: si cruzan otra etiqueta, pasan por detrás de su texto.
+    var guias = nodoSvg('g');
+    svg.appendChild(guias);
+    elementos.forEach(function (e, n) {
+      var retraso = 'animation-delay: ' + (0.15 + n * 0.12).toFixed(2) + 's';
+      var g = nodoSvg('g', { class: 'linea__punto linea__aparece linea__punto--' + e.tipo, 'data-clave': e.clave, style: retraso });
+      var abajo = ejeY - 14 - e.nivel * NIVEL_ALTO;
+      var lineaAlto = e.lineas.length === 3 ? 16 : 17;
+      var arriba = abajo - (e.lineas.length - 1) * lineaAlto;
+      if (e.nivel > 0 || Math.abs(e.centro - e.x) > 1) {
+        guias.appendChild(nodoSvg('line', { x1: e.x, y1: ejeY - 8, x2: e.x, y2: abajo + 4, class: 'linea__guia linea__aparece', style: retraso }));
+      }
+      g.appendChild(nodoSvg('circle', { cx: e.x, cy: ejeY, r: 16, class: 'linea__toque' }));
+      var clase = e.tipo === 'trampa' ? 'linea__trampa' : (e.cazado ? 'linea__gazapo' : 'linea__gazapo linea__gazapo--escapado');
+      g.appendChild(nodoSvg('circle', { cx: e.x, cy: ejeY, r: e.tipo === 'trampa' ? 4.5 : 6, class: clase }));
+      g.appendChild(textoSvg(e.centro, arriba - 2, e.lineas[0], 'linea__texto-palabra'));
+      g.appendChild(textoSvg(e.centro, arriba + lineaAlto - 1, e.lineas[1], 'linea__texto-anio'));
+      if (e.lineas[2]) g.appendChild(textoSvg(e.centro, arriba + 2 * lineaAlto - 1, e.lineas[2], 'linea__texto-distancia'));
+      svg.appendChild(g);
+    });
+
+    caja.textContent = '';
+    caja.classList.toggle('linea--animada', !!animar);
+    caja.appendChild(svg);
+    caja.hidden = false;
+  }
+
+  // Al cambiar el ancho, la línea se vuelve a dibujar (sin animar).
+  function recolocarLinea() {
+    var caja = $('linea-tiempo');
+    if (!$('final-dialogo').open || caja.clientWidth === lineaAncho) return;
+    pintarLineaTiempo(false);
+  }
+
+  // Tocar un punto lleva a su solución, más abajo en la carta corregida, y la resalta.
+  function prepararLinea() {
+    $('linea-tiempo').addEventListener('click', function (e) {
+      var punto = e.target.closest && e.target.closest('[data-clave]');
+      var solucion = punto && $('solucion-' + punto.getAttribute('data-clave'));
+      if (!solucion) return;
+      Array.prototype.forEach.call(document.querySelectorAll('.solucion--resaltada'), function (s) {
+        s.classList.remove('solucion--resaltada');
+      });
+      solucion.classList.add('solucion--resaltada');
+      var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      solucion.scrollIntoView({ block: 'nearest', behavior: reducido ? 'auto' : 'smooth' });
+    });
+  }
+
   /* ---------- Jugada ---------- */
 
   function tocarPalabra(boton) {
@@ -412,7 +1099,7 @@
     if (terminada()) {
       var intento = intentoDe(clave);
       if ((intento && intento.tipo !== 'fallo') || reto.gazapos[clave]) {
-        mostrarNota(clave, true);
+        mostrarNota(clave, Number(boton.dataset.pos), true);
         marcarPalabras();
       }
       return;
@@ -434,17 +1121,18 @@
     var clave = seleccion;
     var tipo = tipoDe(clave);
     var tocado = seleccionBoton;
+    var pos = Number(tocado.dataset.pos);
     seleccion = null;
     seleccionBoton = null;
-    estado.intentos.push({ clave: clave, tipo: tipo });
+    estado.intentos.push({ clave: clave, pos: pos, tipo: tipo });
     guardarEstado();
 
     var fin = terminada();
-    mostrarNota(clave, !fin);
-    marcarPalabras(clave);
+    mostrarNota(clave, pos, !fin);
+    marcarPalabras(pos);
     pintarMarcador(tipo === 'gazapo' ? 'gazapo' : 'borron');
     pintarBoton();
-    if (fin) pintarFinal(true);
+    if (fin) pintarFinal('luego');
     else if (tocado) tocado.focus({ preventScroll: true });
   }
 
@@ -511,8 +1199,13 @@
 
   // La portada con el logo se ve al menos un instante (lo que tardan las orejas en moverse)
   // y luego se desvanece. Después, si toca, se abren las instrucciones.
+  // Si ya se vio en esta sesión, index.html la oculta antes de pintarla: se quita sin esperar.
   function retirarPortada(despues) {
     var portada = $('portada');
+    if (portada && document.documentElement.classList.contains('sin-portada')) {
+      portada.remove();
+      portada = null;
+    }
     if (!portada) {
       despues();
       return;
@@ -528,9 +1221,9 @@
   }
 
   function empezar() {
-    cargarEstado();
     $('fecha-reto').textContent = fechaLarga(reto.fecha);
     pintarCarta();
+    cargarEstado();
     marcarPalabras();
     pintarMarcador();
     pintarBoton();
@@ -540,12 +1233,25 @@
       if (boton) tocarPalabra(boton);
     });
     $('btn-marcar').addEventListener('click', confirmar);
-    window.addEventListener('resize', colocarBurbuja);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(colocarBurbuja);
+    window.addEventListener('resize', recolocar);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        lineaAncho = 0; // las etiquetas de la línea se miden con la letra ya cargada
+        recolocar();
+      });
+    }
     $('btn-compartir').addEventListener('click', compartir);
+    prepararLupa();
+    prepararLinea();
+    prepararFinal();
 
-    if (terminada()) pintarFinal(false);
-    retirarPortada(prepararInstrucciones);
+    // Partida ya terminada: la carta corregida se abre tras la portada (y las
+    // instrucciones, si tocan, que tienen preferencia).
+    if (terminada()) pintarFinal();
+    retirarPortada(function () {
+      prepararInstrucciones();
+      if (terminada()) abrirFinal();
+    });
   }
 
   empezar();
