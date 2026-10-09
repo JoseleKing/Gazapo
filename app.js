@@ -1,6 +1,6 @@
 /* Gazapo · app.js
    Un texto de otra época con tres palabras que no podían estar ahí.
-   Sin servidor: el reto sale de la fecha (hora de Madrid) y de retos.js.
+   Sin servidor: el reto sale de la fecha (hora local del jugador) y de retos.js.
    Para probar otro día: ?dia=AAAA-MM-DD */
 (function () {
   'use strict';
@@ -31,19 +31,11 @@
     try { window.localStorage.setItem(clave, valor); } catch (e) { /* sin almacenamiento */ }
   }
 
-  /* ---------- Fechas (hora de Madrid) ---------- */
+  /* ---------- Fechas (hora local del jugador) ---------- */
 
-  function hoyEnMadrid() {
-    try {
-      var p = {};
-      new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', year: 'numeric', month: 'numeric', day: 'numeric' })
-        .formatToParts(new Date())
-        .forEach(function (x) { p[x.type] = x.value; });
-      return p.year + '-' + String(p.month).padStart(2, '0') + '-' + String(p.day).padStart(2, '0');
-    } catch (e) {
-      var d = new Date();
-      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    }
+  function hoyLocal() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
   function partesFecha(iso) {
@@ -65,7 +57,7 @@
 
   // El de hoy; si no hay, el último publicado; si aún no ha empezado, el primero.
   function elegirReto(retos) {
-    var hoy = hoyEnMadrid();
+    var hoy = hoyLocal();
     try {
       var pedido = new URL(window.location.href).searchParams.get('dia');
       if (pedido && /^\d{4}-\d{2}-\d{2}$/.test(pedido)) hoy = pedido;

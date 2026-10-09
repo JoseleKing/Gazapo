@@ -1,6 +1,6 @@
 /* Gazapo · retos.js
    Un reto por día. Para añadir días, copia un bloque y cambia la fecha de publicación.
-   - fecha: día de publicación (AAAA-MM-DD, hora de Madrid).
+   - fecha: día de publicación (AAAA-MM-DD, hora local del jugador).
    - anio: año en que se escribe el texto.
    - encabezado: lugar y fecha de la carta (no se puede tocar).
    - saludo, parrafos, despedida, firma: el texto de la carta. Todas sus palabras se pueden tocar.
